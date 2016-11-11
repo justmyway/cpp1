@@ -30,8 +30,15 @@ string * RoomPhraseGenerator::CreateRoomPhrase()
 
 	string phrase = "";
 
+	bool firstPart = true;
+
 	for (RoomDefenitionList::iterator outer = _roomDefenitions.begin(); outer != _roomDefenitions.end(); ++outer) {
 		uniform_int_distribution<int> distribution(0, outer->size());
+		if (firstPart) {
+			firstPart = false;
+		}else{
+			phrase += " ";
+		}
 		phrase += outer->at(distribution(generator));
 	}
 
