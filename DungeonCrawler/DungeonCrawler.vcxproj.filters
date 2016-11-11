@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{0cde68e7-4972-4ea2-8d36-9da8473f2b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{e4b58001-e785-4525-afbd-beeb58cbaf0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\CarryItems">
+      <UniqueIdentifier>{91ef8e0c-a27b-48e6-af1d-142916931afb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\CarryItems">
+      <UniqueIdentifier>{1e39d82d-7ed3-4331-9dae-4d570927b06e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GamePhases">
+      <UniqueIdentifier>{6067680a-a834-4ffa-82f6-e408ae84e4a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GamePhases">
+      <UniqueIdentifier>{ab47d119-582e-4575-b16f-95bbcba4765a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\VisualComponents">
+      <UniqueIdentifier>{a893521e-5b1c-4fbd-875c-b9af23dbebcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\VisualComponents">
+      <UniqueIdentifier>{1fece17e-fc53-48dd-b35a-61aec1ce94cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Algorithms">
+      <UniqueIdentifier>{741d09d5-729c-4b43-8b36-d8543fc6b3eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Algorithms">
+      <UniqueIdentifier>{7db97c6d-0610-467d-9166-a3980943b8ef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CarryItem.h">
+      <Filter>Header Files\Model\CarryItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleWriter.h">
+      <Filter>Header Files\VisualComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleReader.h">
+      <Filter>Header Files\VisualComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomGenerator.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomPhraseGenerator.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="Generator.h">
+      <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonCrawler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="CarryItem.cpp">
+      <Filter>Source Files\Model\CarryItems</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleWriter.cpp">
+      <Filter>Source Files\VisualComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleReader.cpp">
+      <Filter>Source Files\VisualComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomGenerator.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomPhraseGenerator.cpp">
+      <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
