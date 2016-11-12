@@ -3,9 +3,10 @@
 class RoomPhraseGenerator
 {
 	typedef vector<string> RoomAttributeList;
-	typedef vector<RoomAttributeList> RoomDefenitionList;
+	typedef vector<RoomAttributeList*> RoomDefenitionList;
 
 	public:
+		~RoomPhraseGenerator();
 		static RoomPhraseGenerator &getInstance();
 
 		string * CreateRoomPhrase();
@@ -15,6 +16,6 @@ class RoomPhraseGenerator
 		RoomPhraseGenerator(RoomPhraseGenerator const&);
 		void operator=(RoomPhraseGenerator const&);
 
-		RoomDefenitionList _roomDefenitions;
+		RoomDefenitionList * roomDefenitions;
 };
 
