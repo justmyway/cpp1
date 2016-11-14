@@ -8,12 +8,10 @@ RoomPhraseGenerator::RoomPhraseGenerator()
 {
 	RoomAttributeList *optionOne = new RoomAttributeList{ "Je staat in een kamer", "Je loop in een droom" };
 	RoomAttributeList *optionTwo = new RoomAttributeList{ "met in het midden een tafel.", "waar het heel donker is.", "waar het heel erg stinkt." };
-	RoomAttributeList *optionThree = new RoomAttributeList{ "met in het midden een tafel. Om de tafel staan vier stoelen", "waar het heel donker is.", "waar het heel erg stinkt." };
+	RoomAttributeList *optionThree = new RoomAttributeList{ "Met in het midden een tafel. Om de tafel staan vier stoelen", "Waar het heel donker is.", "Waar het heel erg stinkt." };
 	RoomAttributeList *optionFour = new RoomAttributeList{ "In de hoek staat een kist.", "Over het plafont klimt een rat!", "Er klinkt een geluid in de verte..."};
 
-	roomDefenitions = new RoomDefenitionList{optionOne};
-
-	delete optionOne, optionTwo, optionThree, optionFour;
+	roomDefenitions = new RoomDefenitionList{optionOne, optionTwo, optionThree, optionFour};
 }
 
 RoomPhraseGenerator::~RoomPhraseGenerator()
@@ -29,14 +27,14 @@ RoomPhraseGenerator & RoomPhraseGenerator::getInstance() {
 string * RoomPhraseGenerator::CreateRoomPhrase()
 {
 	default_random_engine generator;
-	generator.seed(time(0));
 
 	string *phrase = new string();
 
 	bool firstPart = true;
 
 	for (RoomDefenitionList::iterator outer = roomDefenitions->begin(); outer != roomDefenitions->end(); ++outer) {
-		uniform_int_distribution<int> distribution(0, (*outer)->size());
+		generator.seed(1000 * (((double)rand()) / RAND_MAX));
+		uniform_int_distribution<int> distribution(0, ((*outer)->size()-1));
 		if (firstPart) {
 			firstPart = false;
 		}else{

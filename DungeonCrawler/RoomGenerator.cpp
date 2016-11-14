@@ -18,7 +18,7 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 }
 
 Room * RoomGenerator::GenerateFloor() {
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10000; i++) {
 		ConsoleWriter::getInstance().WriteLine(*RoomPhraseGenerator::getInstance().CreateRoomPhrase());
 	}
 	return new Room();

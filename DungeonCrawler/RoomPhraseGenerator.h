@@ -18,4 +18,3 @@ class RoomPhraseGenerator
 
 		RoomDefenitionList * roomDefenitions;
 };
-
