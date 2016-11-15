@@ -1,6 +1,6 @@
 #pragma once
 #include "Room.h";
-
+#include "StairRoom.h";
 
 class RoomGenerator
 {
@@ -8,14 +8,16 @@ class RoomGenerator
 		static RoomGenerator &getInstance();
 
 		void setFloorDimensions(const int, const int);
-		Room * GenerateFloor();
+		Room * GenerateFloor(int, int);
 
 	private:
 		RoomGenerator();
 		RoomGenerator(RoomGenerator const&);
 		void operator=(RoomGenerator const&);
 
-		int _roomWidthFloor;
-		int _roomHeightFloor;
+		int roomWidthFloor;
+		int roomHeightFloor;
+
+		void CreateNeighbors(Room*, int, int, int);
 };
 
