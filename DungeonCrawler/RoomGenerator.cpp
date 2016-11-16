@@ -32,5 +32,14 @@ Room * RoomGenerator::GenerateFloor(int beginX, int beginY) {
 }
 
 void RoomGenerator::CreateNeighbors(Room* room, int x, int y, int amountOfRooms) {
-	
+	// determ max rooms to create: first has 4 posibilities
+	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
+
+	// check not on edge: if on edge -1 posibility
+	if (!(x-1) <= (roomWidthFloor-1-1)) maxRoomsToCreate -= 1;
+	if (!(y-1) <= (roomHeightFloor-1-1)) maxRoomsToCreate -= 1;
+
+
+	if(){
+	}
 }
