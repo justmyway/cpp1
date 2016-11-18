@@ -18,6 +18,9 @@ class RoomGenerator
 		int roomWidthFloor;
 		int roomHeightFloor;
 
+		Room*** floor;
+
 		void CreateNeighbors(Room*, int, int, int);
+		vector<tuple<int, int, Neighbor>> RandomPosibleNeighbors(int, int);
 };
 
