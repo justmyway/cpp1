@@ -18,30 +18,24 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 }
 
 Room * RoomGenerator::GenerateFloor(int beginX, int beginY) {
-	floor = new Room*[roomWidthFloor];
-	for (size_t i = 0; i < roomWidthFloor; i++)
-	{
-		floor[i] = new Room[roomHeightFloor];
+	floor = new Room*[beginX];
+	for (size_t i = 0; i < beginX; i++) {
+		floor[i] = new Room[beginY];
 	}
 	
-	floor[beginX][beginY] = new Room();
-
-	Room *info = floor[beginX][beginY];
+	floor[beginX][beginY].Use();
 
 	//create floor
 	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1);
 	
-	for (int i = 0; i < 10000; i++) {
-		ConsoleWriter::getInstance().WriteLine(*RoomPhraseGenerator::getInstance().CreateRoomPhrase());
-	}
-	return new Room();
+	return &floor[beginX][beginY];
 }
 
-void RoomGenerator::CreateNeighbors(Room* room, int x, int y, int amountOfRooms) {
+void RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) {
 	// determ max rooms to create: first has 4 posibilities
 	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
 
-	// check not on edge: if on edge -1 posibility
+	// check not on edge: if on edge -1 possibility
 	if (!(x-1) <= (roomWidthFloor-1-1)) maxRoomsToCreate--;
 	if (!(y-1) <= (roomHeightFloor-1-1)) maxRoomsToCreate--;
 
@@ -62,13 +56,13 @@ void RoomGenerator::CreateNeighbors(Room* room, int x, int y, int amountOfRooms)
 		tuple<int, int, Neighbor> posibleNeighbor = move(posibleNeighbors.back());
 		posibleNeighbors.pop_back();
 
-		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL) {
+		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]) {
 			//create new room and link
 
 		}
 		else {
 			//link to current
-			room->ConnectNeighbor(get<2>(posibleNeighbor), floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]);
+			room.ConnectNeighbor(get<2>(posibleNeighbor), floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]);
 		}
 
 		roomsToCreate--;

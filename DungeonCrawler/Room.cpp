@@ -1,15 +1,27 @@
 #include "stdafx.h"
 #include "Room.h"
+#include "RoomPhraseGenerator.h"
 
 
 Room::Room()
 {
 	neightbors = vector<tuple<Neighbor, Room*>>();
+	initiallized = false;
 }
 
 
 Room::~Room()
 {
+}
+
+void Room::Use() {
+	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
+	initiallized = true;
+}
+
+bool Room::IsInitialized()
+{
+	return initiallized;
 }
 
 void Room::ConnectNeighbor(Neighbor side, Room * room)
