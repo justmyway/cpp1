@@ -18,9 +18,15 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 }
 
 Room * RoomGenerator::GenerateFloor(int beginX, int beginY) {
-
-	delete[] floor;
+	floor = new Room*[roomWidthFloor];
+	for (size_t i = 0; i < roomWidthFloor; i++)
+	{
+		floor[i] = new Room[roomHeightFloor];
+	}
+	
 	floor[beginX][beginY] = new Room();
+
+	Room *info = floor[beginX][beginY];
 
 	//create floor
 	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1);

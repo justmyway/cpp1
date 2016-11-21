@@ -15,5 +15,5 @@ Game::~Game()
 
 void Game::Play() {
 	ConsoleWriter::getInstance().WriteLine("A new game will be started");
-	RoomGenerator::getInstance().GenerateFloor();
+	RoomGenerator::getInstance().GenerateFloor(0, 0);
 }
