@@ -17,21 +17,20 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 	roomHeightFloor = height;
 }
 
-Room * RoomGenerator::GenerateFloor(int beginX, int beginY) {
+Room ** RoomGenerator::GenerateFloor(int beginX, int beginY) {
 	floor = new Room*[beginX];
-	for (size_t i = 0; i < beginX; i++) {
+	for (size_t i = 0; i < beginX; i++)
 		floor[i] = new Room[beginY];
-	}
 	
 	floor[beginX][beginY].Use();
 
 	//create floor
 	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1);
 	
-	return &floor[beginX][beginY];
+	return floor;
 }
 
-void RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) {
+int RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) {
 	// determ max rooms to create: first has 4 posibilities
 	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
 
@@ -42,31 +41,41 @@ void RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) 
 	//amount of rooms
 	int roomsToCreate = rand() % (maxRoomsToCreate + 1);
 
+	int amountOfTotalRooms = amountOfRooms + roomsToCreate;
+
 	vector<tuple<int, int, Neighbor>> posibleNeighbors = RandomPosibleNeighbors(x, y);
 
 	while (roomsToCreate != 0)
 	{
 		//niet meer dan 50% van de map mag kamer zijn
-		if (amountOfRooms >= (x*y)/2) return;
+		if (amountOfTotalRooms >= (x*y)/2) return amountOfTotalRooms;
 
 		//checking if neighbors to make
-		if (posibleNeighbors.size() == 0) return;
+		if (posibleNeighbors.size() == 0) return amountOfTotalRooms;
 
 		//take first of posible neighbors to try
 		tuple<int, int, Neighbor> posibleNeighbor = move(posibleNeighbors.back());
 		posibleNeighbors.pop_back();
 
-		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]) {
-			//create new room and link
+		Room toLinkNeightbor = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
 
-		}
-		else {
-			//link to current
-			room.ConnectNeighbor(get<2>(posibleNeighbor), floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]);
-		}
+		//create new if not initialized
+		if (!toLinkNeightbor.IsInitialized())
+			toLinkNeightbor.Use();
+
+		//linking rooms
+		room.ConnectNeighbor(get<2>(posibleNeighbor), toLinkNeightbor);
+		toLinkNeightbor.ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
+
+		//creating new rooms
+		int returnRoomAmount = CreateNeighbors(toLinkNeightbor, get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);
+		if (returnRoomAmount > amountOfTotalRooms)
+			amountOfTotalRooms = returnRoomAmount;
 
 		roomsToCreate--;
 	}
+
+	return amountOfTotalRooms;
 }
 
 vector<tuple<int, int, Neighbor>> RoomGenerator::RandomPosibleNeighbors(int x, int y)
@@ -81,4 +90,8 @@ vector<tuple<int, int, Neighbor>> RoomGenerator::RandomPosibleNeighbors(int x, i
 	random_shuffle(neighbors.begin(), neighbors.end());
 	
 	return neighbors;
+}
+
+Neighbor RoomGenerator::GetOppositeSide(Neighbor side) {
+	return (side <= 1 ? static_cast<Neighbor>(side+2) : static_cast<Neighbor>(side - 2));
 }

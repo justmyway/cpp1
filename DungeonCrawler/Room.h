@@ -1,17 +1,22 @@
 #pragma once
 class Room
 {
-public:
-	Room();
-	~Room();
+	public:
+		Room();
+		~Room();
 
-	void Use();
-	bool IsInitialized();
-	void ConnectNeighbor(Neighbor, Room*);
+		void Use();
+		bool IsInitialized();
+		string ToString();
+		string ToStringSouthCoridor();
+		void ConnectNeighbor(Neighbor, Room);
 	
-private:
-	bool initiallized;
-	vector<tuple<Neighbor, Room*>> neightbors;
-	string * description;
+	private:
+		bool initiallized = false;
+		bool visited = false;
+		vector<tuple<Neighbor, Room>> * neightbors;
+		string * description;
+
+		bool NeightborExists(Neighbor);
 };
 
