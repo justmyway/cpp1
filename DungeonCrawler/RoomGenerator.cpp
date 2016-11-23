@@ -17,12 +17,17 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 	roomHeightFloor = height;
 }
 
-Room ** RoomGenerator::GenerateFloor(int beginX, int beginY) {
-	floor = new Room*[beginX];
-	for (size_t i = 0; i < beginX; i++)
-		floor[i] = new Room[beginY];
-	
-	floor[beginX][beginY].Use();
+Room *** RoomGenerator::GenerateFloor(int beginX, int beginY) {
+	floor = new Room**[beginX];
+	for (size_t x = 0; x < roomWidthFloor; x++) {
+		floor[x] = new Room*[roomHeightFloor];
+		for (size_t y = 0; y < roomHeightFloor; y++) {
+			floor[x][y] = NULL;
+		}
+	}
+
+
+	floor[beginX][beginY] = new Room();
 
 	//create floor
 	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1);
@@ -30,7 +35,7 @@ Room ** RoomGenerator::GenerateFloor(int beginX, int beginY) {
 	return floor;
 }
 
-int RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) {
+int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms) {
 	// determ max rooms to create: first has 4 posibilities
 	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
 
@@ -48,24 +53,22 @@ int RoomGenerator::CreateNeighbors(Room room, int x, int y, int amountOfRooms) {
 	while (roomsToCreate != 0)
 	{
 		//niet meer dan 50% van de map mag kamer zijn
-		if (amountOfTotalRooms >= (x*y)/2) return amountOfTotalRooms;
+		if (amountOfTotalRooms >= (roomHeightFloor*roomWidthFloor)/2) return amountOfTotalRooms;
 
 		//checking if neighbors to make
 		if (posibleNeighbors.size() == 0) return amountOfTotalRooms;
 
 		//take first of posible neighbors to try
-		tuple<int, int, Neighbor> posibleNeighbor = move(posibleNeighbors.back());
+		tuple<int, int, Neighbor> posibleNeighbor = posibleNeighbors.back();
 		posibleNeighbors.pop_back();
 
-		Room toLinkNeightbor = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
-
-		//create new if not initialized
-		if (!toLinkNeightbor.IsInitialized())
-			toLinkNeightbor.Use();
+		Room * toLinkNeightbor = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
+		if (toLinkNeightbor == NULL)
+			toLinkNeightbor = new Room();
 
 		//linking rooms
-		room.ConnectNeighbor(get<2>(posibleNeighbor), toLinkNeightbor);
-		toLinkNeightbor.ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
+		room->ConnectNeighbor(get<2>(posibleNeighbor), toLinkNeightbor);
+		toLinkNeightbor->ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
 
 		//creating new rooms
 		int returnRoomAmount = CreateNeighbors(toLinkNeightbor, get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);

@@ -12,6 +12,6 @@ class Game
 		int floorDimensionX;
 		int floorDimensionY;
 
-		void DrawFloor(Room**);
+		void DrawFloor(Room***);
 };
 

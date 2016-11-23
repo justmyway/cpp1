@@ -5,18 +5,14 @@
 
 Room::Room()
 {
-	neightbors = new vector<tuple<Neighbor, Room>>();
+	neightbors = new vector<tuple<Neighbor, Room *>>();
+	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
 }
 
 
 Room::~Room()
 {
 	delete neightbors;
-}
-
-void Room::Use() {
-	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
-	initiallized = true;
 }
 
 string Room::ToString() {
@@ -49,12 +45,7 @@ string Room::ToStringSouthCoridor() {
 	return toString += " ";
 }
 
-bool Room::IsInitialized()
-{
-	return initiallized;
-}
-
-void Room::ConnectNeighbor(Neighbor side, Room room)
+void Room::ConnectNeighbor(Neighbor side, Room * room)
 {
 	for (auto const& neightbor : *neightbors) {
 		if (get<0>(neightbor) == side) return;
