@@ -16,8 +16,34 @@ Room::~Room()
 	delete neightbors;
 }
 
+void Room::Enter(Hero * playerEnter) {
+	player = playerEnter;
+	player->MoveTo(this);
+}
+
+vector<Neighbor> * Room::MoveOptions() {
+	vector<Neighbor> * neighbors = new vector<Neighbor>();
+
+	for (auto const& neightbor : *neightbors)
+		neighbors->push_back(get<0>(neightbor));
+
+	return neighbors;
+}
+
+void Room::MoveTo(Neighbor side) {
+	for (auto const& neightbor : *neightbors) {
+		if (get<0>(neightbor) == side) {
+			get<1>(neightbor)->Enter(player);
+			player = NULL;
+		}
+	}
+}
+
 string Room::ToString() {
 	string toString = "N";
+	
+	if(player != NULL)
+		toString = "P";
 
 	/*if (visited) {
 		toString += "N";

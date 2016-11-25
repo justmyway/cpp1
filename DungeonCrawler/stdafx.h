@@ -27,5 +27,17 @@ using std::get;
 
 enum Neighbor {North, East, South, West};
 
+inline const char* ToString(Neighbor v)
+{
+	switch (v)
+	{
+	case North:		return "North";
+	case East:		return "East";
+	case South:		return "South";
+	case West:		return "West";
+	default:		return "None";
+	}
+}
+
 
 // TODO: reference additional headers your program requires here

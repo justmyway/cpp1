@@ -12,3 +12,12 @@ Hero::~Hero()
 {
 	delete items;
 }
+
+void Hero::MoveTo(Room * movedTo) {
+	room = movedTo;
+}
+
+Room * Hero::GetLocation()
+{
+	return room;
+}

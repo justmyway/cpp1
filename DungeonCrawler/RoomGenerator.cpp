@@ -64,7 +64,6 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 		posibleNeighbors.pop_back();
 
 		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL) {
-			//cout << "x: " + std::to_string(get<0>(posibleNeighbor)) + "    y: " + std::to_string(get<1>(posibleNeighbor)) << endl;
 			floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = new Room();
 		}
 

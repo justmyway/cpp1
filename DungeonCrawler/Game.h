@@ -11,6 +11,8 @@ class Game
 	private:
 		int floorDimensionX;
 		int floorDimensionY;
+		Room *** floor;
+		Hero * player;
 
 		void DrawFloor(Room***);
 };

@@ -1,20 +1,35 @@
 #pragma once
 
 #include "CarryItem.h"
+#include "Room.h"
 
 class Hero
 {
-public:
-	string name;
-	int level;
-	int experancePoints;
-	int lifePoints;
-	int attack;
-	int defence;
+	public:
+		Hero();
+		~Hero();
 
-	vector<CarryItem> *items;
+		string name;
+		int level;
+		int experancePoints;
+		int lifePoints;
+		int attack;
+		int defence;
 
-	Hero();
-	~Hero();
+		vector<CarryItem> *items;
+
+		void MoveTo(Room *);
+		Room * GetLocation();
+
+	private:
+		string name;
+		int level;
+		int experancePoints;
+		int lifePoints;
+		int attack;
+		int defence;
+
+		vector<CarryItem> * items;
+		Room * room;
 };
 

@@ -8,6 +8,8 @@ Game::Game()
 	floorDimensionX = 60;
 	floorDimensionY = 30;
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
+
+	player = new Hero();
 }
 
 
@@ -18,20 +20,31 @@ Game::~Game()
 
 void Game::Play() {
 	ConsoleWriter::getInstance().WriteLine("A new game will be started");
- 	for (int i = 0; i < 2; i++) {
-		Room *** floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
+ 	//for (int i = 0; i < 2; i++) {
+		floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
+		floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
 
-		//draw floor
-		DrawFloor(floor);
-		for (int i = floorDimensionX -1; i >= 0; i--)
+		floor[30][15]->Enter(player);
+
+		for (int i = 0; i < 100; i++) {
+			//draw floor
+			DrawFloor(floor);
+
+			for (auto const& neightbor : *player->GetLocation()->MoveOptions()) {
+				ConsoleWriter::getInstance().WriteLine(ToString(neightbor));
+			}
+			
+		}
+
+		/*for (int i = floorDimensionX -1; i >= 0; i--)
 		{
 			for (int j = floorDimensionY - 1; j >= 0; j--) 
 				delete floor[i][j];
 
 			delete[] floor[i];
 		}
-		delete[] floor;
-	}
+		delete[] floor;*/
+	//}
 }
 
 void Game::DrawFloor(Room *** floor) {
