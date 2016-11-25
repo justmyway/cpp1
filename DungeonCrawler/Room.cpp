@@ -12,22 +12,23 @@ Room::Room()
 
 Room::~Room()
 {
+	delete description;
 	delete neightbors;
 }
 
 string Room::ToString() {
-	string toString = "";
+	string toString = "N";
 
-	if (visited) {
+	/*if (visited) {
 		toString += "N";
 	} else {
-		toString += ".";
-	}
+		toString += ". ";
+	}*/
 
 	if (NeightborExists(Neighbor::East)) {
-		toString += "-";
+		toString += "--";
 	} else {
-		toString += " ";
+		toString += "  ";
 	}
 
 	return toString;
@@ -36,13 +37,13 @@ string Room::ToString() {
 string Room::ToStringSouthCoridor() {
 	string toString = "";
 
-	if (NeightborExists(Neighbor::South)) {
+	if (NeightborExists(Neighbor::South) && visited) {
 		toString += "|";
 	} else {
-		toString += " ";
+		toString += "";
 	}
 
-	return toString += " ";
+	return toString += "  ";
 }
 
 void Room::ConnectNeighbor(Neighbor side, Room * room)

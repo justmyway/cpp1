@@ -18,10 +18,10 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 }
 
 Room *** RoomGenerator::GenerateFloor(int beginX, int beginY) {
-	floor = new Room**[beginX];
-	for (size_t x = 0; x < roomWidthFloor; x++) {
+	floor = new Room**[roomWidthFloor];
+	for (int x = 0; x < roomWidthFloor; x++) {
 		floor[x] = new Room*[roomHeightFloor];
-		for (size_t y = 0; y < roomHeightFloor; y++) {
+		for (int y = 0; y < roomHeightFloor; y++) {
 			floor[x][y] = NULL;
 		}
 	}
@@ -62,13 +62,16 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 		tuple<int, int, Neighbor> posibleNeighbor = posibleNeighbors.back();
 		posibleNeighbors.pop_back();
 
+		if(floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL)
+			floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = new Room();
+
 		Room * toLinkNeightbor = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
-		if (toLinkNeightbor == NULL)
-			toLinkNeightbor = new Room();
 
 		//linking rooms
 		room->ConnectNeighbor(get<2>(posibleNeighbor), toLinkNeightbor);
 		toLinkNeightbor->ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
+
+		floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = toLinkNeightbor;
 
 		//creating new rooms
 		int returnRoomAmount = CreateNeighbors(toLinkNeightbor, get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);

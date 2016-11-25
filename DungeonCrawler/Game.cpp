@@ -18,10 +18,20 @@ Game::~Game()
 
 void Game::Play() {
 	ConsoleWriter::getInstance().WriteLine("A new game will be started");
-	Room *** floor = RoomGenerator::getInstance().GenerateFloor(0, 0);
+ 	for (int i = 0; i < 10; i++) {
+		Room *** floor = RoomGenerator::getInstance().GenerateFloor(5, 5);
 
-	//draw floor
-	DrawFloor(floor);
+		//draw floor
+		DrawFloor(floor);
+		for (int i = floorDimensionX -1; i >= 0; i--)
+		{
+			for (int j = floorDimensionY - 1; j >= 0; j--) 
+				delete floor[i][j];
+
+			delete[] floor[i];
+		}
+		delete[] floor;
+	}
 }
 
 void Game::DrawFloor(Room *** floor) {
@@ -29,18 +39,27 @@ void Game::DrawFloor(Room *** floor) {
 
 	for (int x = floorDimensionX - 1; x >= 0; x--) {
 		
-		string floorLine = "";
+		string floorLine = " ";
 		for (int y = 0; y < floorDimensionY; y++) {
-			floorLine += floor[x][y]->ToString();
+			if (floor[x][y] != NULL) {
+				floorLine += floor[x][y]->ToString();
+			} else {
+				floorLine += ".  ";
+			}
 		}
 		ConsoleWriter::getInstance().WriteLine(floorLine);
 
-		if (x =! floorDimensionX - 1) {
-			floorLine = "";
+		if (x != 0) {
+			floorLine = " ";
 			for (int y = 0; y < floorDimensionY; y++) {
-				floorLine += floor[x][y]->ToStringSouthCoridor();
+				if (floor[x][y] != NULL) {
+					floorLine += floor[x][y]->ToStringSouthCoridor();
+				} else {
+					floorLine += "   ";
+				}
 			}
 			ConsoleWriter::getInstance().WriteLine(floorLine);
 		}
 	}
+	ConsoleWriter::getInstance().WriteLine("");
 }

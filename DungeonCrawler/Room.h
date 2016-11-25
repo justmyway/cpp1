@@ -11,7 +11,6 @@ class Room
 		void ConnectNeighbor(Neighbor, Room*);
 	
 	private:
-		bool initiallized = false;
 		bool visited = false;
 		vector<tuple<Neighbor, Room *>> * neightbors;
 		string * description;
