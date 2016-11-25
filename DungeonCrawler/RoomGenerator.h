@@ -23,5 +23,6 @@ class RoomGenerator
 		int CreateNeighbors(Room *, int, int, int);
 		vector<tuple<int, int, Neighbor>> RandomPosibleNeighbors(int, int);
 		Neighbor GetOppositeSide(Neighbor);
+		bool InbetweenMap(int, int);
 };
 

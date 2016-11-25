@@ -35,15 +35,10 @@ string Room::ToString() {
 }
 
 string Room::ToStringSouthCoridor() {
-	string toString = "";
-
-	if (NeightborExists(Neighbor::South) && visited) {
-		toString += "|";
-	} else {
-		toString += "";
+	if (NeightborExists(Neighbor::South)) {
+		return "|  ";
 	}
-
-	return toString += "  ";
+	return "   ";
 }
 
 void Room::ConnectNeighbor(Neighbor side, Room * room)

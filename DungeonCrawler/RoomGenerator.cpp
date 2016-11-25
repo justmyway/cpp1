@@ -26,7 +26,6 @@ Room *** RoomGenerator::GenerateFloor(int beginX, int beginY) {
 		}
 	}
 
-
 	floor[beginX][beginY] = new Room();
 
 	//create floor
@@ -40,11 +39,13 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
 
 	// check not on edge: if on edge -1 possibility
-	if (!(x-1) <= (roomWidthFloor-1-1)) maxRoomsToCreate--;
-	if (!(y-1) <= (roomHeightFloor-1-1)) maxRoomsToCreate--;
+ 	if (!InbetweenMap(x, roomWidthFloor)) maxRoomsToCreate--;
+	if (!InbetweenMap(y, roomHeightFloor)) maxRoomsToCreate--;
 
 	//amount of rooms
-	int roomsToCreate = rand() % (maxRoomsToCreate + 1);
+	int roomsToCreate = maxRoomsToCreate;
+	if (maxRoomsToCreate != 4)
+		roomsToCreate = rand() % (maxRoomsToCreate + 1);
 
 	int amountOfTotalRooms = amountOfRooms + roomsToCreate;
 
@@ -62,19 +63,19 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 		tuple<int, int, Neighbor> posibleNeighbor = posibleNeighbors.back();
 		posibleNeighbors.pop_back();
 
-		if(floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL)
+		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL) {
+			//cout << "x: " + std::to_string(get<0>(posibleNeighbor)) + "    y: " + std::to_string(get<1>(posibleNeighbor)) << endl;
 			floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = new Room();
-
-		Room * toLinkNeightbor = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
+		}
 
 		//linking rooms
-		room->ConnectNeighbor(get<2>(posibleNeighbor), toLinkNeightbor);
-		toLinkNeightbor->ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
+		room->ConnectNeighbor(get<2>(posibleNeighbor), floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]);
+		floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)]->ConnectNeighbor(GetOppositeSide(get<2>(posibleNeighbor)), room);
 
-		floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = toLinkNeightbor;
+		floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
 
 		//creating new rooms
-		int returnRoomAmount = CreateNeighbors(toLinkNeightbor, get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);
+		int returnRoomAmount = CreateNeighbors(floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)], get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);
 		if (returnRoomAmount > amountOfTotalRooms)
 			amountOfTotalRooms = returnRoomAmount;
 
@@ -100,4 +101,9 @@ vector<tuple<int, int, Neighbor>> RoomGenerator::RandomPosibleNeighbors(int x, i
 
 Neighbor RoomGenerator::GetOppositeSide(Neighbor side) {
 	return (side <= 1 ? static_cast<Neighbor>(side+2) : static_cast<Neighbor>(side - 2));
+}
+
+bool RoomGenerator::InbetweenMap(int a, int b)
+{
+	return a >= 1 && a < b-1;
 }
