@@ -1,7 +1,8 @@
 #include "stdafx.h"
-#include "Room.h"
-#include "RoomPhraseGenerator.h"
 
+#include "RoomPhraseGenerator.h"
+#include "Room.h"
+#include "Hero.h"
 
 Room::Room()
 {
@@ -18,7 +19,7 @@ Room::~Room()
 
 void Room::Enter(Hero * playerEnter) {
 	player = playerEnter;
-	player->MoveTo(this);
+	//player->MoveTo(this);
 }
 
 vector<Neighbor> * Room::MoveOptions() {
@@ -34,6 +35,7 @@ void Room::MoveTo(Neighbor side) {
 	for (auto const& neightbor : *neightbors) {
 		if (get<0>(neightbor) == side) {
 			get<1>(neightbor)->Enter(player);
+			player->MoveTo(get<1>(neightbor));
 			player = NULL;
 		}
 	}

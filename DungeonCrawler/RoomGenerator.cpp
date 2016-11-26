@@ -5,6 +5,7 @@
 
 RoomGenerator::RoomGenerator()
 {
+	roomDensity = 0.85;
 }
 
 RoomGenerator & RoomGenerator::getInstance() {
@@ -54,7 +55,7 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 	while (roomsToCreate != 0)
 	{
 		//niet meer dan 50% van de map mag kamer zijn
-		if (amountOfTotalRooms >= (roomHeightFloor*roomWidthFloor)/2) return amountOfTotalRooms;
+		if (amountOfTotalRooms >= (roomHeightFloor*roomWidthFloor)*roomDensity) return amountOfTotalRooms;
 
 		//checking if neighbors to make
 		if (posibleNeighbors.size() == 0) return amountOfTotalRooms;

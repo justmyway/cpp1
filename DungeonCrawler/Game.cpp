@@ -1,7 +1,8 @@
 #include "stdafx.h"
-#include "Game.h"
 
 #include "RoomGenerator.h"
+
+#include "Game.h"
 
 Game::Game()
 {
@@ -25,6 +26,7 @@ void Game::Play() {
 		floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
 
 		floor[30][15]->Enter(player);
+		player->MoveTo(floor[30][15]);
 
 		for (int i = 0; i < 100; i++) {
 			//draw floor

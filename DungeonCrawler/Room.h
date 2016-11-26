@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Hero.h":
+class Hero;
 
 class Room
 {

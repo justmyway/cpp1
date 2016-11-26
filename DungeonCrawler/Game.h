@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Room.h"
+#include "Hero.h"
 
 class Game
 {

@@ -33,7 +33,7 @@ string * RoomPhraseGenerator::CreateRoomPhrase()
 	bool firstPart = true;
 
 	for (RoomDefenitionList::iterator outer = roomDefenitions->begin(); outer != roomDefenitions->end(); ++outer) {
-		generator.seed(1000 * (((double)rand()) / RAND_MAX));
+		generator.seed((unsigned int)(1000 * (((double)rand()) / RAND_MAX)));
 		uniform_int_distribution<int> distribution(0, ((*outer)->size()-1));
 		if (firstPart) {
 			firstPart = false;

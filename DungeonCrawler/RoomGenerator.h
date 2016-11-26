@@ -1,6 +1,6 @@
 #pragma once
-#include "Room.h";
-#include "StairRoom.h";
+#include "Room.h"
+#include "StairRoom.h"
 
 class RoomGenerator
 {
@@ -17,6 +17,7 @@ class RoomGenerator
 
 		int roomWidthFloor;
 		int roomHeightFloor;
+		double roomDensity;
 
 		Room*** floor;
 
