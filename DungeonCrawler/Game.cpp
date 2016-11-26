@@ -4,6 +4,10 @@
 
 #include "Game.h"
 
+#include <iostream>
+#include <thread>
+#include <chrono>
+
 Game::Game()
 {
 	floorDimensionX = 60;
@@ -30,11 +34,14 @@ void Game::Play() {
 
 		for (int i = 0; i < 100; i++) {
 			//draw floor
+			ConsoleWriter::getInstance().ClearView();
 			DrawFloor(floor);
 
 			for (auto const& neightbor : *player->GetLocation()->MoveOptions()) {
 				ConsoleWriter::getInstance().WriteLine(ToString(neightbor));
 			}
+
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			
 		}
 

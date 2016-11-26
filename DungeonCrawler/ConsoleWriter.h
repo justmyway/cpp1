@@ -11,6 +11,7 @@ class ConsoleWriter
 	public:
 		static ConsoleWriter &getInstance();
 		void WriteLine(const string&);
+		void ClearView();
 
 	private:
 		ConsoleWriter();

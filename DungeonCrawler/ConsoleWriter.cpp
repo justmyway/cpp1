@@ -15,3 +15,8 @@ ConsoleWriter & ConsoleWriter::getInstance()
 void ConsoleWriter::WriteLine(const string & line) {
 	cout << line << endl;
 }
+
+void ConsoleWriter::ClearView()
+{
+	system("cls");
+}
