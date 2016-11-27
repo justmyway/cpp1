@@ -11,6 +11,7 @@ class Room
 		void Enter(Hero*);
 		vector<Neighbor> * MoveOptions();
 		void MoveTo(Neighbor);
+		bool Visited();
 
 		string ToString();
 		string ToStringSouthCoridor();
@@ -19,9 +20,10 @@ class Room
 	private:
 		bool visited = false;
 		Hero * player;
-		vector<tuple<Neighbor, Room *>> * neightbors;
+		vector<tuple<Neighbor, Room *>> * neighbors;
 		string * description;
 
-		bool NeightborExists(Neighbor);
+		bool NeighborExists(Neighbor);
+		Room * GetNeighbor(Neighbor);
 };
 

@@ -10,8 +10,8 @@
 
 Game::Game()
 {
-	floorDimensionX = 60;
-	floorDimensionY = 30;
+	floorDimensionX = 70;
+	floorDimensionY = 26;
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
 
 	player = new Hero();
@@ -26,22 +26,35 @@ Game::~Game()
 void Game::Play() {
 	ConsoleWriter::getInstance().WriteLine("A new game will be started");
  	//for (int i = 0; i < 2; i++) {
-		floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
-		floor = RoomGenerator::getInstance().GenerateFloor(30, 15);
+		floor = RoomGenerator::getInstance().GenerateFloor(35, 13);
+		floor = RoomGenerator::getInstance().GenerateFloor(35, 13);
 
-		floor[30][15]->Enter(player);
-		player->MoveTo(floor[30][15]);
+		floor[35][13]->Enter(player);
+		player->MoveTo(floor[35][13]);
 
-		for (int i = 0; i < 100; i++) {
-			//draw floor
-			ConsoleWriter::getInstance().ClearView();
-			DrawFloor(floor);
+		int x = 0;
 
-			for (auto const& neightbor : *player->GetLocation()->MoveOptions()) {
+		for (int i = 0; i < 100000; i++) {
+			//if (x = 1000) {
+				//draw floor
+				ConsoleWriter::getInstance().ClearView();
+				DrawFloor(floor);
+				x = 0;
+			//}
+
+			vector<Neighbor> posibleNeightbors = *player->GetLocation()->MoveOptions();
+
+			for (auto const& neightbor : posibleNeightbors) {
 				ConsoleWriter::getInstance().WriteLine(ToString(neightbor));
 			}
 
-			std::this_thread::sleep_for(std::chrono::seconds(1));
+			Neighbor directionToMoveTo = posibleNeightbors.at(rand() % posibleNeightbors.size());
+
+			ConsoleWriter::getInstance().WriteLine("Will move to -> " + string(ToString(directionToMoveTo)));
+
+			player->GetLocation()->MoveTo(directionToMoveTo);
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(300));
 			
 		}
 
@@ -59,9 +72,11 @@ void Game::Play() {
 void Game::DrawFloor(Room *** floor) {
 	ConsoleWriter::getInstance().WriteLine("Floor:");
 
+	vector<string> * floorRep = new vector<string>();
+
 	for (int y = floorDimensionY - 1; y >= 0; y--) {
 		
-		string floorLine = " ";
+		string floorLine = "  ";
 		for (int x = 0; x < floorDimensionX; x++) {
 			if (floor[x][y] != NULL) {
 				floorLine += floor[x][y]->ToString();
@@ -71,10 +86,10 @@ void Game::DrawFloor(Room *** floor) {
 			}
 		}
 
-		ConsoleWriter::getInstance().WriteLine(floorLine);
+		floorRep->push_back(floorLine);
 
 		if (y != 0) {
-			floorLine = " ";
+			floorLine = "  ";
 			for (int x = 0; x < floorDimensionX; x++) {
 				if (floor[x][y] != NULL) {
 					floorLine += floor[x][y]->ToStringSouthCoridor();
@@ -83,33 +98,9 @@ void Game::DrawFloor(Room *** floor) {
 					floorLine += "   ";
 				}
 			}
-			ConsoleWriter::getInstance().WriteLine(floorLine);
+			floorRep->push_back(floorLine);
 		}
 	}
 
-	/*for (int x = floorDimensionX - 1; x >= 0; x--) {
-		
-		string floorLine = " ";
-		for (int y = 0; y < floorDimensionY; y++) {
-			if (floor[x][y] != NULL) {
-				floorLine += floor[x][y]->ToString();
-			} else {
-				floorLine += ".  ";
-			}
-		}
-		ConsoleWriter::getInstance().WriteLine(floorLine);
-
-		if (x != 0) {
-			floorLine = " ";
-			for (int y = 0; y < floorDimensionY; y++) {
-				if (floor[x][y] != NULL) {
-					floorLine += floor[x][y]->ToStringSouthCoridor();
-				} else {
-					floorLine += "   ";
-				}
-			}
-			ConsoleWriter::getInstance().WriteLine(floorLine);
-		}
-	}
-	ConsoleWriter::getInstance().WriteLine("");*/
+	ConsoleWriter::getInstance().WriteLine(floorRep);
 }

@@ -6,7 +6,7 @@
 
 Room::Room()
 {
-	neightbors = new vector<tuple<Neighbor, Room *>>();
+	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
 }
 
@@ -14,25 +14,25 @@ Room::Room()
 Room::~Room()
 {
 	delete description;
-	delete neightbors;
+	delete neighbors;
 }
 
 void Room::Enter(Hero * playerEnter) {
+	visited = true;
 	player = playerEnter;
-	//player->MoveTo(this);
 }
 
 vector<Neighbor> * Room::MoveOptions() {
-	vector<Neighbor> * neighbors = new vector<Neighbor>();
+	vector<Neighbor> * returnNeighbors = new vector<Neighbor>();
 
-	for (auto const& neightbor : *neightbors)
-		neighbors->push_back(get<0>(neightbor));
+	for (auto const& neighbor : *neighbors)
+		returnNeighbors->push_back(get<0>(neighbor));
 
-	return neighbors;
+	return returnNeighbors;
 }
 
 void Room::MoveTo(Neighbor side) {
-	for (auto const& neightbor : *neightbors) {
+	for (auto const& neightbor : *neighbors) {
 		if (get<0>(neightbor) == side) {
 			get<1>(neightbor)->Enter(player);
 			player->MoveTo(get<1>(neightbor));
@@ -41,48 +41,63 @@ void Room::MoveTo(Neighbor side) {
 	}
 }
 
+bool Room::Visited()
+{
+	return visited;
+}
+
 string Room::ToString() {
-	string toString = "N";
-	
-	if(player != NULL)
-		toString = "P";
+	string rep;
 
-	/*if (visited) {
-		toString += "N";
-	} else {
-		toString += ". ";
-	}*/
-
-	if (NeightborExists(Neighbor::East)) {
-		toString += "--";
-	} else {
-		toString += "  ";
+	if (!visited) {
+		rep += ".";
+	}
+	else {
+		if (player != NULL) {
+			rep += "P";
+		}
+		else {
+			rep += "N";
+		}
 	}
 
-	return toString;
+	if (NeighborExists(Neighbor::East)) {
+		if (visited || GetNeighbor(Neighbor::East)->Visited())
+			return rep += "--";
+	}
+
+	return rep += "  ";
 }
 
 string Room::ToStringSouthCoridor() {
-	if (NeightborExists(Neighbor::South)) {
-		return "|  ";
+
+	if (NeighborExists(Neighbor::South)) {
+		if (visited || GetNeighbor(Neighbor::South)->Visited())
+			return "|  ";
 	}
+
 	return "   ";
 }
 
 void Room::ConnectNeighbor(Neighbor side, Room * room)
 {
-	for (auto const& neightbor : *neightbors) {
+	for (auto const& neightbor : *neighbors) {
 		if (get<0>(neightbor) == side) return;
 	}
 
-	neightbors->push_back(make_tuple(side, room));
+	neighbors->push_back(make_tuple(side, room));
 }
 
-bool Room::NeightborExists(Neighbor side)
+bool Room::NeighborExists(Neighbor side)
 {
-	for (auto const& neightbor : *neightbors)
-		if (get<0>(neightbor) == side) 
-			return true;
+	return GetNeighbor(side) != NULL;
+}
 
-	return false;
+Room * Room::GetNeighbor(Neighbor side)
+{
+	for (auto const& neighbor : *neighbors)
+		if (get<0>(neighbor) == side)
+			return get<1>(neighbor);
+
+	return NULL;
 }

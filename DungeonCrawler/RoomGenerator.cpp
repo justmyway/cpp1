@@ -5,7 +5,7 @@
 
 RoomGenerator::RoomGenerator()
 {
-	roomDensity = 0.85;
+	roomDensity = 1;
 }
 
 RoomGenerator & RoomGenerator::getInstance() {
