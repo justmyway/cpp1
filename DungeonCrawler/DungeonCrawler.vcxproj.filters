@@ -81,6 +81,15 @@
     <ClInclude Include="Generator.h">
       <Filter>Header Files\Algorithms</Filter>
     </ClInclude>
+    <ClInclude Include="IGamePhase.h">
+      <Filter>Header Files\GamePhases</Filter>
+    </ClInclude>
+    <ClInclude Include="FightGamePhase.h">
+      <Filter>Header Files\GamePhases</Filter>
+    </ClInclude>
+    <ClInclude Include="InRoomGamePhase.h">
+      <Filter>Header Files\GamePhases</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -112,6 +121,15 @@
     </ClCompile>
     <ClCompile Include="RoomPhraseGenerator.cpp">
       <Filter>Source Files\Algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="IGamePhase.cpp">
+      <Filter>Source Files\GamePhases</Filter>
+    </ClCompile>
+    <ClCompile Include="InRoomGamePhase.cpp">
+      <Filter>Source Files\GamePhases</Filter>
+    </ClCompile>
+    <ClCompile Include="FightGamePhase.cpp">
+      <Filter>Source Files\GamePhases</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

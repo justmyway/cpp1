@@ -148,9 +148,12 @@
     <ClInclude Include="CarryItem.h" />
     <ClInclude Include="ConsoleReader.h" />
     <ClInclude Include="ConsoleWriter.h" />
+    <ClInclude Include="FightGamePhase.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="IGamePhase.h" />
+    <ClInclude Include="InRoomGamePhase.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomPhraseGenerator.h" />
@@ -162,8 +165,11 @@
     <ClCompile Include="ConsoleReader.cpp" />
     <ClCompile Include="ConsoleWriter.cpp" />
     <ClCompile Include="DungeonCrawler.cpp" />
+    <ClCompile Include="FightGamePhase.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="IGamePhase.cpp" />
+    <ClCompile Include="InRoomGamePhase.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="RoomPhraseGenerator.cpp" />

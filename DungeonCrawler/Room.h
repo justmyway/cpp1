@@ -7,6 +7,8 @@ class Room
 	public:
 		Room();
 		~Room();
+
+		string * description;
 		
 		void Enter(Hero*);
 		vector<Neighbor> * MoveOptions();
@@ -21,7 +23,7 @@ class Room
 		bool visited = false;
 		Hero * player;
 		vector<tuple<Neighbor, Room *>> * neighbors;
-		string * description;
+		//string * description;
 
 		bool NeighborExists(Neighbor);
 		Room * GetNeighbor(Neighbor);
