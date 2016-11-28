@@ -4,7 +4,7 @@ class FightGamePhase :
 	public IGamePhase
 {
 public:
-	FightGamePhase();
+	FightGamePhase(Hero *, Game *);
 	~FightGamePhase();
 };
 

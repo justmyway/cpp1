@@ -15,6 +15,7 @@
 #include <algorithm>
 
 #include "ConsoleWriter.h"
+#include "ConsoleReader.h"
 
 using std::string;
 using std::vector;
@@ -37,6 +38,11 @@ inline const char* ToString(Neighbor v)
 	case West:		return "West";
 	default:		return "None";
 	}
+}
+
+constexpr unsigned int Str2Int(const char* str, int h = 0)
+{
+	return !str[h] ? 5381 : (Str2Int(str, h + 1) * 33) ^ str[h];
 }
 
 

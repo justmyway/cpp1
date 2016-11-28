@@ -13,7 +13,7 @@ ConsoleWriter & ConsoleWriter::getInstance()
 }
 
 void ConsoleWriter::WriteLine(const string & line) {
-	cout << line << endl;
+	cout << " " << line << endl;
 }
 
 void ConsoleWriter::WriteLine(const vector<string>* multipleLines)

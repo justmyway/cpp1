@@ -10,6 +10,7 @@ class RoomPhraseGenerator
 		static RoomPhraseGenerator &getInstance();
 
 		string * CreateRoomPhrase();
+		string CreateHallPhrase();
 
 	private:
 		RoomPhraseGenerator();
@@ -17,4 +18,5 @@ class RoomPhraseGenerator
 		void operator=(RoomPhraseGenerator const&);
 
 		RoomDefenitionList * roomDefenitions;
+		vector<string> * hallDefenitions;
 };

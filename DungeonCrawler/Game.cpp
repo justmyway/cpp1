@@ -10,6 +10,9 @@
 
 Game::Game()
 {
+	// get input to initialize game
+	// todo
+
 	floorDimensionX = 10;
 	floorDimensionY = 10;
 	finished = false;
@@ -17,7 +20,7 @@ Game::Game()
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
 
 	player = new Hero();
-	phase = new InRoomGamePhase();
+	phase = new InRoomGamePhase(player, this);
 }
 
 
@@ -92,10 +95,11 @@ void Game::Play() {
 	////}
 }
 
-void Game::DrawFloor(Room *** floor) {
-	ConsoleWriter::getInstance().WriteLine("Floor:");
-
+void Game::DrawFloor() {
 	vector<string> * floorRep = new vector<string>();
+
+	floorRep->push_back("");
+	floorRep->push_back("Verdieping: ");
 
 	for (int y = floorDimensionY - 1; y >= 0; y--) {
 		
@@ -125,5 +129,6 @@ void Game::DrawFloor(Room *** floor) {
 		}
 	}
 
+	floorRep->push_back("");
 	ConsoleWriter::getInstance().WriteLine(floorRep);
 }

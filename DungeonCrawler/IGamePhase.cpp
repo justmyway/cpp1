@@ -2,8 +2,10 @@
 #include "IGamePhase.h"
 
 
-IGamePhase::IGamePhase()
+IGamePhase::IGamePhase(Hero * thePlayer, Game * theGame)
 {
+	player = thePlayer;
+	game = theGame;
 }
 
 

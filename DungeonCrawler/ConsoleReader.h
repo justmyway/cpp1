@@ -3,6 +3,7 @@ class ConsoleReader
 {
 	public:
 		static ConsoleReader &getInstance();
+		string ReadLine();
 
 	private:
 		ConsoleReader();

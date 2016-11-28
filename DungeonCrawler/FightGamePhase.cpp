@@ -2,7 +2,7 @@
 #include "FightGamePhase.h"
 
 
-FightGamePhase::FightGamePhase()
+FightGamePhase::FightGamePhase(Hero * thePlayer, Game * theGame) : IGamePhase(thePlayer, theGame)
 {
 }
 

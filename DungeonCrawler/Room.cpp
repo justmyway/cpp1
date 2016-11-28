@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "RoomPhraseGenerator.h"
+
 #include "Room.h"
 #include "Hero.h"
 
@@ -44,6 +45,11 @@ void Room::MoveTo(Neighbor side) {
 bool Room::Visited()
 {
 	return visited;
+}
+
+int Room::AmountOfEnemies()
+{
+	return 0;
 }
 
 string Room::ToString() {

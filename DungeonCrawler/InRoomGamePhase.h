@@ -5,7 +5,7 @@ class InRoomGamePhase :
 	public IGamePhase
 {
 	public:
-		InRoomGamePhase(Hero *);
+		InRoomGamePhase(Hero *, Game *);
 		~InRoomGamePhase();
 
 		void Run();
@@ -13,5 +13,6 @@ class InRoomGamePhase :
 	private:
 		void DisplayDescription();
 		void DisplayActions();
+		vector<string> CreateActions();
 };
 

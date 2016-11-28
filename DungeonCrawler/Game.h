@@ -13,6 +13,7 @@ class Game
 		~Game();
 
 		void Play();
+		void DrawFloor();
 	private:
 		int floorDimensionX;
 		int floorDimensionY;
@@ -20,7 +21,5 @@ class Game
 		Room *** floor;
 		Hero * player;
 		IGamePhase * phase;
-
-		void DrawFloor(Room***);
 };
 
