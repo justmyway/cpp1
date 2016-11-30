@@ -11,15 +11,15 @@
 Game::Game()
 {
 	// get input to initialize game
-	// todo
+	if (debug) {
+		SetupDebugPlayer();
+	} else {
+		SetupCustomPlayer();
+	}
 
-	floorDimensionX = 10;
-	floorDimensionY = 10;
 	finished = false;
 
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
-
-	player = new Hero();
 	phase = new InRoomGamePhase(player, this);
 }
 
@@ -32,8 +32,8 @@ Game::~Game()
 
 
 void Game::Play() {
-	ConsoleWriter::getInstance().WriteLine("A new game will be started");
-
+	ConsoleWriter::getInstance().WriteLine(new vector<string> { "", "--- A new game will be started ---", ""});
+	
 	// setup starting location
 	int startX = floorDimensionX / 2;
 	int startY = floorDimensionY / 2;
@@ -131,4 +131,46 @@ void Game::DrawFloor() {
 
 	floorRep->push_back("");
 	ConsoleWriter::getInstance().WriteLine(floorRep);
+}
+
+void Game::SetupCustomPlayer()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "--- Setup the game ---", "" });
+
+	ConsoleWriter::getInstance().WriteLine("Geef de breedte van de dungeon op:");
+	while (floorDimensionX == 0)
+	{
+		string input = ConsoleReader::getInstance().ReadLine();
+		int value = atoi(input.c_str());
+		if (value > 4 && value <= 100)
+			floorDimensionX = value;
+	}
+
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Geef de hoogte van de dungeon op:" });
+	while (floorDimensionY == 0)
+	{
+		string input = ConsoleReader::getInstance().ReadLine();
+		int value = atoi(input.c_str());
+		if (value > 4 && value <= 100)
+			floorDimensionY = value;
+	}
+
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Wat is de naam van jou Hero?:" });
+	string name;
+	while (Str2Int(name.c_str()) == Str2Int(""))
+	{
+		name = ConsoleReader::getInstance().ReadLine();
+	}
+
+	player = new Hero(name);
+}
+
+void Game::SetupDebugPlayer()
+{
+	floorDimensionX = 12;
+	floorDimensionY = 12;
+
+	player = new Hero("Mikes wife");
+
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "--- Default user en settings made! ---" });
 }

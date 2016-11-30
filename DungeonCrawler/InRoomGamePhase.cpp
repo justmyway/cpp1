@@ -36,6 +36,9 @@ void InRoomGamePhase::Run()
 				const char * cString = action.c_str();
 				switch (Str2Int(cString))
 				{
+				case Str2Int("loop"):
+					WalkMove();
+					break;
 				case Str2Int("kaart"):
 					game->DrawFloor();
 					break;
@@ -116,4 +119,39 @@ vector<string> InRoomGamePhase::CreateActions()
 	actions.push_back("kaart");
 
 	return actions;
+}
+
+void InRoomGamePhase::WalkMove()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke kant wil je op? (n, e, s, w)", "" });
+
+	bool moved = false;
+
+	while (!moved)
+	{
+		string input = ConsoleReader::getInstance().ReadLine();
+
+		if (Str2Int(input.c_str()) == Str2Int("n")) {
+			input = "North";
+		}
+
+		if (Str2Int(input.c_str()) == Str2Int("e")) {
+			input = "East";
+		}
+
+		if (Str2Int(input.c_str()) == Str2Int("s")) {
+			input = "South";
+		}
+
+		if (Str2Int(input.c_str()) == Str2Int("w")) {
+			input = "West";
+		}
+
+		for (auto const &action : *player->GetLocation()->MoveOptions()) {
+			if (Str2Int(input.c_str()) == Str2Int(ToString(action))) {
+				player->GetLocation()->MoveTo(action);
+				moved = true;
+			}
+		}
+	}
 }

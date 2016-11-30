@@ -14,5 +14,7 @@ class InRoomGamePhase :
 		void DisplayDescription();
 		void DisplayActions();
 		vector<string> CreateActions();
+
+		void WalkMove();
 };
 

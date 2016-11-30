@@ -18,8 +18,14 @@ class Game
 		int floorDimensionX;
 		int floorDimensionY;
 		bool finished;
+
+		bool debug = true;
+
 		Room *** floor;
 		Hero * player;
 		IGamePhase * phase;
+
+		void SetupCustomPlayer();
+		void SetupDebugPlayer();
 };
 

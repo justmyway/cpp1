@@ -7,7 +7,7 @@ class Room;
 class Hero
 {
 	public:
-		Hero();
+		Hero(string);
 		~Hero();
 
 		void MoveTo(Room *);
