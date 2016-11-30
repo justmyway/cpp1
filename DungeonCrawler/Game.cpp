@@ -129,6 +129,14 @@ void Game::DrawFloor() {
 		}
 	}
 
+	floorRep->push_back("Legenda:");
+	floorRep->push_back("|- : Gangen");
+	floorRep->push_back("S  : Start locatie");
+	floorRep->push_back("E  : Eind vijand");
+	floorRep->push_back("N  : Normale ruimte");
+	floorRep->push_back("L  : Trap omlaag");
+	floorRep->push_back("H  : Trap omhoog");
+	floorRep->push_back(".  : Niet bezocht");
 	floorRep->push_back("");
 	ConsoleWriter::getInstance().WriteLine(floorRep);
 }
