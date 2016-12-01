@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "RoomGenerator.h"
 
-#include "RoomPhraseGenerator.h"
-
 RoomGenerator::RoomGenerator()
 {
-	roomDensity = 1;
+	roomDensity = 0.8;
 }
 
 RoomGenerator & RoomGenerator::getInstance() {

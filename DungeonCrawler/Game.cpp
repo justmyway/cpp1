@@ -138,6 +138,7 @@ void Game::DrawFloor() {
 	floorRep->push_back("H  : Trap omhoog");
 	floorRep->push_back(".  : Niet bezocht");
 	floorRep->push_back("");
+
 	ConsoleWriter::getInstance().WriteLine(floorRep);
 }
 
