@@ -148,7 +148,10 @@
     <ClInclude Include="CarryItem.h" />
     <ClInclude Include="ConsoleReader.h" />
     <ClInclude Include="ConsoleWriter.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyGenerator.h" />
     <ClInclude Include="FightGamePhase.h" />
+    <ClInclude Include="FileReader.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Hero.h" />
@@ -165,7 +168,10 @@
     <ClCompile Include="ConsoleReader.cpp" />
     <ClCompile Include="ConsoleWriter.cpp" />
     <ClCompile Include="DungeonCrawler.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyGenerator.cpp" />
     <ClCompile Include="FightGamePhase.cpp" />
+    <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="IGamePhase.cpp" />
