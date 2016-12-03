@@ -11,6 +11,7 @@ class Enemy
 
 		int GetLevel();
 		string GetName();
+		int GetPower();
 		int DiedGetxp();
 		bool TakeDamage(int);
 

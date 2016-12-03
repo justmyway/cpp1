@@ -40,6 +40,21 @@ string Enemy::GetName()
 	return name;
 }
 
+int Enemy::GetPower()
+{
+	int totalAttackPower = 0;
+
+	for(int i = 0; i < attackAmount; i++) {
+		srand(time_t(0));
+		int change = rand() % 100 + 1;
+
+		if (hitChance >= change)
+			totalAttackPower += rand() % (maxDamage - minDamage) + minDamage;
+	}
+
+	return totalAttackPower;
+}
+
 int Enemy::DiedGetxp()
 {
 	if (lifePoints <= 0)

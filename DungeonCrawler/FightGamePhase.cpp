@@ -41,6 +41,9 @@ void FightGamePhase::Run()
 				const char * cString = action.c_str();
 				switch (Str2Int(cString))
 				{
+				case Str2Int("aanval"):
+					FightBeasts();
+					break;
 				case Str2Int("vlucht"):
 					FleeMove();
 					break;
@@ -177,7 +180,10 @@ void FightGamePhase::FightBeasts()
 				
 					int xp = player->GetLocation()->GetEnemies()->at(value)->DiedGetxp();
 					if (xp > 0) {
+						player->GiveXp(xp);
 						ConsoleWriter::getInstance().WriteLine("Je hebt hem vermoord!");
+						delete player->GetLocation()->GetEnemies()->at(value);
+						player->GetLocation()->GetEnemies()->erase(player->GetLocation()->GetEnemies()->begin() + value);
 					}
 				}
 				else {
@@ -189,15 +195,26 @@ void FightGamePhase::FightBeasts()
 			}
 
 			//enemies attacking
+			vector<string> * enemyAttackLines = new vector<string>{"", "Je tegenstanders deden: "};
+
+			for (auto const &enemy : *player->GetLocation()->GetEnemies()) {
+				
+				int attackPower = enemy->GetPower();
+
+				string attackPowerLine = "mist";
+
+				if (attackPower > 0)
+					if (player->TakeDamage(attackPower))
+						attackPowerLine = "doet " + to_string(attackPower) + " schade";
+				
+				enemyAttackLines->push_back(enemy->GetName()+" bijt en " + attackPowerLine + ".");
+			}
+
+			enemyAttackLines->push_back("");
+			enemyAttackLines->push_back(player->ToStringHealth());
+			ConsoleWriter::getInstance().WriteLine(enemyAttackLines);
 
 			attacked = true;
-		}
-
-		for (auto const &action : *player->GetLocation()->MoveOptions()) {
-			if (Str2Int(input.c_str()) == Str2Int(ToString(action))) {
-				player->GetLocation()->MoveTo(action);
-				attacked = true;
-			}
 		}
 	}
 }

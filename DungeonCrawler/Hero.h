@@ -11,20 +11,24 @@ class Hero
 		~Hero();
 
 		vector<string> * ToString();
+		string ToStringHealth();
 		void MoveTo(Room *);
 		Room * GetLocation();
 		
 		void GiveXp(int);
 		int GetPower();
 		int GetAttackChance();
+		bool TakeDamage(int);
 		vector<string> * GetPosions();
 		vector<string> * GetObjects();
 
 	private:
 		string name;
 		int level;
+		int needToLevel = 0;
 		int experancePoints;
 		int lifePoints;
+		int maxLifePoints;
 		int attack;
 		int attackChance;
 		int defence;
