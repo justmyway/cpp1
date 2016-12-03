@@ -4,6 +4,7 @@
 #include "RoomPhraseGenerator.h"
 
 #include "Hero.h"
+#include "Enemy.h"
 #include "Room.h"
 #include "Game.h"
 
@@ -20,6 +21,10 @@ void InRoomGamePhase::Run()
 {
 	DisplayDescription();
 	ConsoleWriter::getInstance().WriteLine("");
+	if (player->GetLocation()->AmountOfEnemies() > 0) {
+		game->SetPhase("Fight");
+		return;
+	}
 	DisplayActions();
 
 	bool validAction = false;
@@ -42,11 +47,13 @@ void InRoomGamePhase::Run()
 				case Str2Int("kaart"):
 					game->DrawFloor();
 					break;
+				case Str2Int("speler"):
+					ConsoleWriter::getInstance().WriteLine(player->ToString());
+					break;
 				default:
 					ConsoleWriter::getInstance().WriteLine("System error: on call " + action);
 					break;
 				}
-				//delete cString;
 			}
 		}
 
@@ -67,8 +74,12 @@ void InRoomGamePhase::DisplayDescription()
 		rep->push_back(exits);
 	}
 	rep->push_back("");
-	if(player->GetLocation()->AmountOfEnemies() != 0)
+	/*if (player->GetLocation()->AmountOfEnemies() != 0) {
 		rep->push_back("Aanwezig: ");
+		vector<Enemy*>::iterator it;
+		for (it = player->GetLocation()->GetEnemies()->begin(); it != player->GetLocation()->GetEnemies()->end(); ++it)
+			rep->push_back((*it)->ToString());
+	}*/
 
 	ConsoleWriter::getInstance().WriteLine(rep);
 }
@@ -118,12 +129,15 @@ vector<string> InRoomGamePhase::CreateActions()
 	// look at map
 	actions.push_back("kaart");
 
+	// look at map
+	actions.push_back("speler");
+
 	return actions;
 }
 
 void InRoomGamePhase::WalkMove()
 {
-	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke kant wil je op? (n, e, s, w)", "" });
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke kant wil je op? (n, e, s, w)", "Mogelijke zetten zijn hier boven weergegeven" , "" });
 
 	bool moved = false;
 

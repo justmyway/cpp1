@@ -1,6 +1,9 @@
 #pragma once
 
 class Hero;
+class Enemy;
+
+class FightGamePhase;
 
 class Room
 {
@@ -16,6 +19,8 @@ class Room
 		bool Visited();
 		int AmountOfEnemies();
 
+		vector<Enemy*> * GetEnemies();
+
 		string ToString();
 		string ToStringSouthCoridor();
 		void ConnectNeighbor(Neighbor, Room*);
@@ -23,9 +28,12 @@ class Room
 	private:
 		bool visited = false;
 		Hero * player;
+		int floorLevel;
 		vector<tuple<Neighbor, Room *>> * neighbors;
 
 		bool NeighborExists(Neighbor);
 		Room * GetNeighbor(Neighbor);
+
+		vector<Enemy *> * enemies;
 };
 

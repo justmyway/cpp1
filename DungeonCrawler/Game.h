@@ -5,6 +5,7 @@
 
 #include "IGamePhase.h"
 #include "InRoomGamePhase.h"
+#include "FightGamePhase.h"
 
 class Game
 {
@@ -13,6 +14,8 @@ class Game
 		~Game();
 
 		void Play();
+		void SetPhase(string);
+
 		void DrawFloor();
 	private:
 		int floorDimensionX;

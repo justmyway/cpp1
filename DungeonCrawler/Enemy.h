@@ -2,17 +2,26 @@
 class Enemy
 {
 	public:
-		Enemy(string, int, int, int, int, int, int);
+		Enemy();
+		Enemy(string, string, int, int, int, int, int, int);
 		~Enemy();
 
-		Enemy * clone();
+		Enemy * Clone();
+		string ToString();
+
+		int GetLevel();
+		string GetName();
+		int DiedGetxp();
+		bool TakeDamage(int);
 
 	private:
 		string name;
-		int level;
+		string level;
 		int attackAmount;
+		int xp;
 		int hitChance;
-		int damage;
+		int minDamage;
+		int maxDamage;
 		int defenceChance;
 		int lifePoints;
 };

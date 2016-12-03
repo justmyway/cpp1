@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "RoomGenerator.h"
+#include "EnemyGenerator.h"
 
 #include "Game.h"
 
@@ -20,7 +21,7 @@ Game::Game()
 	finished = false;
 
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
-	phase = new InRoomGamePhase(player, this);
+	SetPhase("InRoom");
 }
 
 
@@ -45,6 +46,7 @@ void Game::Play() {
 	player->MoveTo(floor[startX][startY]);
 	// floor setup
 
+	//EnemyGenerator::getInstance().GenerateEnemy(1);
 
 	while (!finished) {
 		phase->Run();
@@ -93,6 +95,21 @@ void Game::Play() {
 	//	}
 	//	delete[] floor;*/
 	////}
+}
+
+void Game::SetPhase(string newPhase)
+{
+	delete phase;
+
+	if (newPhase == "InRoom") {
+		phase = new InRoomGamePhase(player, this);
+	}else if (newPhase == "Fight") {
+		phase = new FightGamePhase(player, this);
+	}
+	else {
+		ConsoleWriter::getInstance().WriteLine("Phase not recognised");
+		exit(EXIT_FAILURE);
+	}
 }
 
 void Game::DrawFloor() {

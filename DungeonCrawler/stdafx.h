@@ -25,6 +25,7 @@ using std::make_tuple;
 using std::random_shuffle;
 using std::move;
 using std::get;
+using std::to_string;
 
 enum Neighbor {North, East, South, West};
 
@@ -40,10 +41,12 @@ inline const char* ToString(Neighbor v)
 	}
 }
 
+inline const int ToInt(string v)
+{
+	return atoi(v.c_str());
+}
+
 constexpr unsigned int Str2Int(const char* str, int h = 0)
 {
 	return !str[h] ? 5381 : (Str2Int(str, h + 1) * 33) ^ str[h];
 }
-
-
-// TODO: reference additional headers your program requires here

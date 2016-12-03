@@ -7,7 +7,7 @@ class FileReader
 {
 public:
 	static FileReader &getInstance();
-	vector<string> * ReadFile(string, bool = false);
+	vector<string> * ReadFile(string, bool);
 
 private:
 	FileReader();

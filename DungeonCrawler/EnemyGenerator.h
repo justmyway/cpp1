@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Enemy.h";
+#include "Enemy.h"
 
 class EnemyGenerator
 {
 	public:
+		~EnemyGenerator();
 		static EnemyGenerator &getInstance();
 		Enemy * GenerateEnemy(int);
 
@@ -13,6 +14,8 @@ class EnemyGenerator
 		EnemyGenerator(EnemyGenerator const&);
 		void operator=(EnemyGenerator const&);
 
-		vector<Enemy>
+		unsigned int split(std::string &, std::vector<std::string>&, char);
+
+		vector<Enemy*> * enemies;
 };
 

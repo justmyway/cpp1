@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "RoomPhraseGenerator.h"
+#include "Enemygenerator.h"
 
 #include "Room.h"
 #include "Hero.h"
@@ -9,6 +10,9 @@ Room::Room()
 {
 	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
+	enemies = new vector<Enemy * >();
+
+	floorLevel = 1;
 }
 
 
@@ -21,6 +25,14 @@ Room::~Room()
 void Room::Enter(Hero * playerEnter) {
 	visited = true;
 	player = playerEnter;
+
+	if (enemies->size() == 0) {
+		srand(time_t(0));
+		int amountOfEnemies = rand() % 3;
+		for (int i = 0; i < amountOfEnemies; i++) {
+			enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(floorLevel));
+		}
+	}
 }
 
 vector<Neighbor> * Room::MoveOptions() {
@@ -49,7 +61,12 @@ bool Room::Visited()
 
 int Room::AmountOfEnemies()
 {
-	return 0;
+	return enemies->size();
+}
+
+vector<Enemy*>* Room::GetEnemies()
+{
+	return enemies;
 }
 
 string Room::ToString() {
