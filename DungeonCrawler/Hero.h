@@ -19,6 +19,8 @@ class Hero
 		int GetPower();
 		int GetAttackChance();
 		bool TakeDamage(int);
+		bool CanLevelUp();
+		bool UpGrade(string);
 		vector<string> * GetPosions();
 		vector<string> * GetObjects();
 

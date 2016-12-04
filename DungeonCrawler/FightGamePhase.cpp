@@ -63,16 +63,15 @@ void FightGamePhase::DisplayDescription()
 		vector<string> * rep = new vector<string>();
 
 		rep->push_back("Aanwezig: ");
-		vector<Enemy*>::iterator it;
 		int index = 0;
-		for (it = player->GetLocation()->GetEnemies()->begin(); it != player->GetLocation()->GetEnemies()->end(); ++it) {
-			rep->push_back("["+to_string(index)+"]  "+(*it)->ToString());
+		for (auto const &enemy : *player->GetLocation()->GetEnemies()) {
+			rep->push_back("[" + to_string(index) + "]  " + enemy->ToString());
 			index++;
 		}
 		ConsoleWriter::getInstance().WriteLine(rep);
 	}
 	else {
-		ConsoleWriter::getInstance().WriteLine("Alle beesten zijn gedood");
+		ConsoleWriter::getInstance().WriteLine("Alle beesten zijn gedood.");
 	}
 }
 
@@ -212,6 +211,7 @@ void FightGamePhase::FightBeasts()
 
 			enemyAttackLines->push_back("");
 			enemyAttackLines->push_back(player->ToStringHealth());
+			enemyAttackLines->push_back("");
 			ConsoleWriter::getInstance().WriteLine(enemyAttackLines);
 
 			attacked = true;

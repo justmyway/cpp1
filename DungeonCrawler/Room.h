@@ -29,6 +29,7 @@ class Room
 		bool visited = false;
 		Hero * player;
 		int floorLevel;
+		bool noEnemies;
 		vector<tuple<Neighbor, Room *>> * neighbors;
 
 		bool NeighborExists(Neighbor);

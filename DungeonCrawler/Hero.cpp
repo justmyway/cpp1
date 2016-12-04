@@ -10,7 +10,7 @@ Hero::Hero(string newName)
 	maxLifePoints = 10;
 	experancePoints = 0;
 	attack = 2;
-	attackChance = 40;
+	attackChance = 20;
 	defence = 40;
 	items = new vector<CarryItem>();
 }
@@ -55,7 +55,9 @@ void Hero::GiveXp(int points)
 {
 	experancePoints += points;
 
-	if (experancePoints / 100 / 1.6 > (level + needToLevel))
+	int totalLevel = level + needToLevel;
+
+	if (experancePoints >= 25*totalLevel*(1+totalLevel))
 		needToLevel++;
 }
 
@@ -86,6 +88,47 @@ bool Hero::TakeDamage(int strength)
 	}
 
 	return false;
+}
+
+bool Hero::CanLevelUp()
+{
+	return needToLevel > 0;
+}
+
+bool Hero::UpGrade(string value)
+{
+	if (value == "levens") {
+		maxLifePoints = (maxLifePoints + 10) * 1.2;
+	}
+	else if(value == "aanvals-kracht"){
+		attack = (attack + 4) * 1.8;
+	}
+	else if (value == "aanvals-kans") {
+		if (attackChance >= 100)
+			return false;
+
+		attackChance = (attackChance * 1.5) + 20;
+
+		if (attackChance > 100)
+			attackChance = 100;
+	}
+	else if (value == "verdedigings-kans") {
+		if (defence >= 100)
+			return false;
+
+		defence += 20;
+
+		if (defence > 100)
+			defence = 100;
+	}
+	else {
+		return false;
+	}
+
+	needToLevel--;
+	level++;
+
+	return true;
 }
 
 vector<string>* Hero::GetPosions()

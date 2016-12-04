@@ -13,7 +13,7 @@ RoomPhraseGenerator::RoomPhraseGenerator()
 
 	roomDefenitions = new RoomDefenitionList{optionOne, optionTwo, optionThree, optionFour};
 
-	hallDefenitions = new vector<string>{ "is de uitgang uit de kerker.", "is een stevige deur.", "is een gang", "komt het licht je tegmoet.", "is een lange donkere gang", "is een volgende kamer! Geloof ik..." };
+	hallDefenitions = new vector<string>{ "is de uitgang uit de kerker.", "is een stevige deur.", "is een gang", "komt het licht je tegemoet.", "is een lange donkere gang", "is een volgende kamer! Geloof ik..." };
 }
 
 RoomPhraseGenerator::~RoomPhraseGenerator()

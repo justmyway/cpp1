@@ -25,6 +25,10 @@ void InRoomGamePhase::Run()
 		game->SetPhase("Fight");
 		return;
 	}
+	if (player->CanLevelUp()) {
+		game->SetPhase("LevelUp");
+		return;
+	}
 	DisplayActions();
 
 	bool validAction = false;

@@ -99,6 +99,9 @@
     <ClInclude Include="FileReader.h">
       <Filter>Header Files\VisualComponents</Filter>
     </ClInclude>
+    <ClInclude Include="LevelUpGamePhase.h">
+      <Filter>Header Files\GamePhases</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="FileReader.cpp">
       <Filter>Source Files\VisualComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUpGamePhase.cpp">
+      <Filter>Source Files\GamePhases</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

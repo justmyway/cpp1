@@ -105,6 +105,8 @@ void Game::SetPhase(string newPhase)
 		phase = new InRoomGamePhase(player, this);
 	}else if (newPhase == "Fight") {
 		phase = new FightGamePhase(player, this);
+	}	else if (newPhase == "LevelUp") { 
+		phase = new LevelUpGamePhase(player, this);
 	}
 	else {
 		ConsoleWriter::getInstance().WriteLine("Phase not recognised");

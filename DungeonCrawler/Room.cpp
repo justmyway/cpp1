@@ -13,6 +13,7 @@ Room::Room()
 	enemies = new vector<Enemy * >();
 
 	floorLevel = 1;
+	noEnemies = false;
 }
 
 
@@ -26,8 +27,8 @@ void Room::Enter(Hero * playerEnter) {
 	visited = true;
 	player = playerEnter;
 
-	if (enemies->size() == 0) {
-		srand(time_t(0));
+	if (enemies->size() == 0 && !noEnemies) {
+		//srand(time_t(0));
 		int amountOfEnemies = rand() % 3;
 		for (int i = 0; i < amountOfEnemies; i++) {
 			enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(floorLevel));

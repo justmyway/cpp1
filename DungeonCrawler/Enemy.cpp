@@ -19,7 +19,7 @@ Enemy::~Enemy()
 
 Enemy * Enemy::Clone()
 {
-	return nullptr;
+	return new Enemy(name, level, attackAmount, hitChance, minDamage, maxDamage, defenceChance, lifePoints);
 }
 
 string Enemy::ToString()

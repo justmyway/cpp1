@@ -157,6 +157,7 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="IGamePhase.h" />
     <ClInclude Include="InRoomGamePhase.h" />
+    <ClInclude Include="LevelUpGamePhase.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomPhraseGenerator.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="IGamePhase.cpp" />
     <ClCompile Include="InRoomGamePhase.cpp" />
+    <ClCompile Include="LevelUpGamePhase.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="RoomPhraseGenerator.cpp" />

@@ -6,6 +6,7 @@
 #include "IGamePhase.h"
 #include "InRoomGamePhase.h"
 #include "FightGamePhase.h"
+#include "LevelUpGamePhase.h"
 
 class Game
 {

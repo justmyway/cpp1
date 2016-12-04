@@ -1,12 +1,12 @@
 #pragma once
 #include "IGamePhase.h"
 
-class FightGamePhase :
+class LevelUpGamePhase :
 	public IGamePhase
 {
 public:
-	FightGamePhase(Hero*, Game*);
-	~FightGamePhase();
+	LevelUpGamePhase(Hero*, Game*);
+	~LevelUpGamePhase();
 
 	void Run();
 
@@ -14,7 +14,5 @@ private:
 	void DisplayDescription();
 	void DisplayActions();
 	vector<string> CreateActions();
-
-	void FleeMove();
-	void FightBeasts();
 };
+
