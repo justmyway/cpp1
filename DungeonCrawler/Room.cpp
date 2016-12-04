@@ -10,7 +10,7 @@ Room::Room()
 {
 	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
-	enemies = new vector<Enemy * >();
+	enemies = new vector<Enemy *>();
 
 	floorLevel = 1;
 	noEnemies = true;
@@ -68,6 +68,11 @@ int Room::AmountOfEnemies()
 vector<Enemy*>* Room::GetEnemies()
 {
 	return enemies;
+}
+
+void Room::SetEndBoss()
+{
+	enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(99));
 }
 
 string Room::ToString() {

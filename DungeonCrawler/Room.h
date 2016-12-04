@@ -21,6 +21,7 @@ class Room
 
 		vector<Enemy*> * GetEnemies();
 
+		void SetEndBoss();
 		string ToString();
 		string ToStringSouthCoridor();
 		void ConnectNeighbor(Neighbor, Room*);
