@@ -45,7 +45,7 @@ int Enemy::GetPower()
 	int totalAttackPower = 0;
 
 	for(int i = 0; i < attackAmount; i++) {
-		srand(time_t(0));
+		//srand(time_t(0));
 		int change = rand() % 100 + 1;
 
 		if (hitChance >= change)
@@ -65,7 +65,7 @@ int Enemy::DiedGetxp()
 
 bool Enemy::TakeDamage(int strength)
 {
-	srand(time_t(0));
+	//srand(time_t(0));
 	int change = rand() % 100 + 1;
 
 	if (defenceChance < change) {

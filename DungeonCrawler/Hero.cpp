@@ -13,6 +13,8 @@ Hero::Hero(string newName)
 	attackChance = 20;
 	defence = 40;
 	items = new vector<CarryItem>();
+
+	srand(time_t(0));
 }
 
 
@@ -63,7 +65,7 @@ void Hero::GiveXp(int points)
 
 int Hero::GetPower()
 {
-	srand(time_t(0));
+	//srand(time_t(0));
 	int change = rand() % 100 + 1;
 
 	if (attackChance >= change)
@@ -79,7 +81,7 @@ int Hero::GetAttackChance()
 
 bool Hero::TakeDamage(int strength)
 {
-	srand(time_t(0));
+	//srand(time_t(0));
 	int change = rand() % 100 + 1;
 
 	if (defence < change) {

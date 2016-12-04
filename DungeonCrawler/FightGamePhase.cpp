@@ -18,13 +18,13 @@ FightGamePhase::~FightGamePhase()
 
 void FightGamePhase::Run()
 {
-	DisplayDescription();
-
 	if (player->GetLocation()->AmountOfEnemies() == 0) {
 		game->SetPhase("InRoom");
 		return;
 	}
-
+	
+	DisplayDescription();
+	
 	DisplayActions();
 
 	bool validAction = false;
@@ -167,7 +167,7 @@ void FightGamePhase::FightBeasts()
 
 		if (value >= 0 && value <= player->GetLocation()->GetEnemies()->size() -1) {
 
-			srand(time_t(0));
+			//srand(time_t(0));
 
 			//attack a enemy
 			ConsoleWriter::getInstance().WriteLine("Je valt " + player->GetLocation()->GetEnemies()->at(value)->GetName() + " aan.");
