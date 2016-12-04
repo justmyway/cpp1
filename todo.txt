@@ -1,0 +1,5 @@
+player gaat dood,
+opslaan en inlezen,
+objecten gebruiken,
+lagen koppelen,
+eind vijand

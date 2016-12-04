@@ -13,7 +13,7 @@ Room::Room()
 	enemies = new vector<Enemy * >();
 
 	floorLevel = 1;
-	noEnemies = false;
+	noEnemies = true;
 }
 
 

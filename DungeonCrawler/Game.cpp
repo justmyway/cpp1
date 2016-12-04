@@ -22,6 +22,8 @@ Game::Game()
 
 	RoomGenerator::getInstance().setFloorDimensions(floorDimensionX, floorDimensionY);
 	SetPhase("InRoom");
+
+	dungeon = new vector<Room ***>();
 }
 
 
@@ -29,6 +31,7 @@ Game::~Game()
 {
 	delete player;
 	delete phase;
+	delete dungeon
 }
 
 
@@ -39,62 +42,39 @@ void Game::Play() {
 	int startX = floorDimensionX / 2;
 	int startY = floorDimensionY / 2;
  	
-	floor = RoomGenerator::getInstance().GenerateFloor(startX, startY);
-	floor = RoomGenerator::getInstance().GenerateFloor(startX, startY);
-	
-	floor[startX][startY]->Enter(player);
-	player->MoveTo(floor[startX][startY]);
-	// floor setup
+	int buildFloor = 0;
 
-	//EnemyGenerator::getInstance().GenerateEnemy(1);
+	while (buildFloor < 10) {
+		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY));
+		buildFloor++;
+		if (buildFloor < 10) {
+			//random pick on floor
+		}
+	}
+	
+	currentFloor = 0;
+	dungeon->at(currentFloor)[startX][startY]->Enter(player);
+	player->MoveTo(dungeon->at(currentFloor)[startX][startY]);
+	// floor setup
 
 	while (!finished) {
 		phase->Run();
 	}
-	
-	
-	////for (int i = 0; i < 2; i++) {
-	//	floor = RoomGenerator::getInstance().GenerateFloor(35, 13);
-	//	floor = RoomGenerator::getInstance().GenerateFloor(35, 13);
 
-	//	floor[35][13]->Enter(player);
-	//	player->MoveTo(floor[35][13]);
+	//remove whole dungeon
+	while (dungeon->size() != 0) {
+		Room *** floor = dungeon->back();
+		dungeon->pop_back();
 
-	//	int x = 0;
+		for (int i = floorDimensionX - 1; i >= 0; i--)
+		{
+			for (int j = floorDimensionY - 1; j >= 0; j--)
+				delete floor[i][j];
 
-	//	for (int i = 0; i < 100000; i++) {
-	//		//if (x = 1000) {
-	//			//draw floor
-	//			ConsoleWriter::getInstance().ClearView();
-	//			DrawFloor(floor);
-	//			x = 0;
-	//		//}
-
-	//		vector<Neighbor> posibleNeightbors = *player->GetLocation()->MoveOptions();
-
-	//		for (auto const& neightbor : posibleNeightbors) {
-	//			ConsoleWriter::getInstance().WriteLine(ToString(neightbor));
-	//		}
-
-	//		Neighbor directionToMoveTo = posibleNeightbors.at(rand() % posibleNeightbors.size());
-
-	//		ConsoleWriter::getInstance().WriteLine("Will move to -> " + string(ToString(directionToMoveTo)));
-
-	//		player->GetLocation()->MoveTo(directionToMoveTo);
-
-	//		//std::this_thread::sleep_for(std::chrono::milliseconds(300));
-	//		
-	//	}
-
-	//	/*for (int i = floorDimensionX -1; i >= 0; i--)
-	//	{
-	//		for (int j = floorDimensionY - 1; j >= 0; j--) 
-	//			delete floor[i][j];
-
-	//		delete[] floor[i];
-	//	}
-	//	delete[] floor;*/
-	////}
+			delete[] floor[i];
+		}
+		delete[] floor;
+	}
 }
 
 void Game::SetPhase(string newPhase)
@@ -115,6 +95,9 @@ void Game::SetPhase(string newPhase)
 }
 
 void Game::DrawFloor() {
+
+	Room *** floor = dungeon->at(currentFloor);
+
 	vector<string> * floorRep = new vector<string>();
 
 	floorRep->push_back("");
@@ -159,6 +142,8 @@ void Game::DrawFloor() {
 	floorRep->push_back("");
 
 	ConsoleWriter::getInstance().WriteLine(floorRep);
+
+	delete floor;
 }
 
 void Game::SetupCustomPlayer()
@@ -195,8 +180,8 @@ void Game::SetupCustomPlayer()
 
 void Game::SetupDebugPlayer()
 {
-	floorDimensionX = 12;
-	floorDimensionY = 12;
+	floorDimensionX = 8;
+	floorDimensionY = 8;
 
 	player = new Hero("Mikes wife");
 

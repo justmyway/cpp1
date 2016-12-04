@@ -10,7 +10,7 @@ Hero::Hero(string newName)
 	maxLifePoints = 10;
 	experancePoints = 0;
 	attack = 2;
-	attackChance = 20;
+	attackChance = 40;
 	defence = 40;
 	items = new vector<CarryItem>();
 

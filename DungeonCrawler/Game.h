@@ -25,7 +25,8 @@ class Game
 
 		bool debug = true;
 
-		Room *** floor;
+		vector<Room ***> * dungeon;
+		int currentFloor;
 		Hero * player;
 		IGamePhase * phase;
 
