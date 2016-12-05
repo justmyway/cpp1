@@ -27,7 +27,7 @@ using std::move;
 using std::get;
 using std::to_string;
 
-enum Neighbor {North, East, South, West};
+enum Neighbor {North, East, South, West, Up, Down};
 
 inline const char* ToString(Neighbor v)
 {
@@ -37,6 +37,8 @@ inline const char* ToString(Neighbor v)
 	case East:		return "East";
 	case South:		return "South";
 	case West:		return "West";
+	case Up:		return "Up";
+	case Down:		return "Down";
 	default:		return "None";
 	}
 }

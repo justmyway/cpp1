@@ -8,7 +8,7 @@ class RoomGenerator
 		static RoomGenerator &getInstance();
 
 		void setFloorDimensions(const int, const int);
-		Room *** GenerateFloor(int, int);
+		Room *** GenerateFloor(int, int, int);
 
 	private:
 		RoomGenerator();
@@ -21,7 +21,7 @@ class RoomGenerator
 
 		Room*** floor;
 
-		int CreateNeighbors(Room *, int, int, int);
+		int CreateNeighbors(Room *, int, int, int, int);
 		vector<tuple<int, int, Neighbor>> RandomPosibleNeighbors(int, int);
 		Neighbor GetOppositeSide(Neighbor);
 		bool InbetweenMap(int, int);

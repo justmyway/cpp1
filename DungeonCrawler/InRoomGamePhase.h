@@ -16,6 +16,6 @@ class InRoomGamePhase :
 		vector<string> CreateActions();
 
 		void WalkMove();
-
+		void Resting();
 };
 

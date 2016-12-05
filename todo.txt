@@ -1,5 +1,5 @@
-player gaat dood,
 opslaan en inlezen,
-objecten gebruiken,
-lagen koppelen,
-eind vijand
+objecten gebruiken
+
+
+PHASE EN ENEMIES WORDEN VERWIJDERD

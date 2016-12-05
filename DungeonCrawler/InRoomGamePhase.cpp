@@ -48,6 +48,9 @@ void InRoomGamePhase::Run()
 				case Str2Int("loop"):
 					WalkMove();
 					break;
+				case Str2Int("rust"):
+					Resting();
+					break;
 				case Str2Int("kaart"):
 					game->DrawFloor();
 					break;
@@ -78,12 +81,6 @@ void InRoomGamePhase::DisplayDescription()
 		rep->push_back(exits);
 	}
 	rep->push_back("");
-	/*if (player->GetLocation()->AmountOfEnemies() != 0) {
-		rep->push_back("Aanwezig: ");
-		vector<Enemy*>::iterator it;
-		for (it = player->GetLocation()->GetEnemies()->begin(); it != player->GetLocation()->GetEnemies()->end(); ++it)
-			rep->push_back((*it)->ToString());
-	}*/
 
 	ConsoleWriter::getInstance().WriteLine(rep);
 }
@@ -141,7 +138,7 @@ vector<string> InRoomGamePhase::CreateActions()
 
 void InRoomGamePhase::WalkMove()
 {
-	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke kant wil je op? (n, e, s, w)", "Mogelijke zetten zijn hier boven weergegeven" , "" });
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke kant wil je op? (n, e, s, w, u, d)", "Mogelijke zetten zijn hier boven weergegeven" , "" });
 
 	bool moved = false;
 
@@ -165,11 +162,41 @@ void InRoomGamePhase::WalkMove()
 			input = "West";
 		}
 
+		if (Str2Int(input.c_str()) == Str2Int("u")) {
+			input = "Up";
+		}
+
+		if (Str2Int(input.c_str()) == Str2Int("d")) {
+			input = "Down";
+		}
+
 		for (auto const &action : *player->GetLocation()->MoveOptions()) {
 			if (Str2Int(input.c_str()) == Str2Int(ToString(action))) {
 				player->GetLocation()->MoveTo(action);
+				if (Str2Int(input.c_str()) == Str2Int("Down")) {
+					game->MoveFloor(1);
+				} 
+				if (Str2Int(input.c_str()) == Str2Int("Up")) {
+					game->MoveFloor(-1);
+				}
 				moved = true;
 			}
 		}
+	}
+}
+
+void InRoomGamePhase::Resting()
+{
+	ConsoleWriter::getInstance().WriteLine("Zow even een tukky, hopen dat ik niet word aan gevallen!");
+
+	player->Resting();
+
+	int chance = rand() % 100;
+	if (chance < 50) {
+		player->GetLocation()->GenEnemies();
+		ConsoleWriter::getInstance().WriteLine("Verdomme tijdens het rusten zijn er monsters langs gekomen en vallen ze aan!");
+	}
+	else {
+		ConsoleWriter::getInstance().WriteLine("Dat was een lekker tukky");
 	}
 }

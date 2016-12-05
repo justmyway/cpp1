@@ -8,12 +8,12 @@ class FightGamePhase;
 class Room
 {
 	public:
-		Room();
+		Room(int);
 		~Room();
 
 		string * description;
 		
-		void Enter(Hero*);
+		void Enter(Hero*, bool);
 		vector<Neighbor> * MoveOptions();
 		void MoveTo(Neighbor);
 		bool Visited();
@@ -22,11 +22,13 @@ class Room
 		vector<Enemy*> * GetEnemies();
 
 		void SetEndBoss();
+		void GenEnemies();
 		string ToString();
 		string ToStringSouthCoridor();
 		void ConnectNeighbor(Neighbor, Room*);
 	
 	private:
+		bool startfield = false;
 		bool visited = false;
 		Hero * player;
 		int floorLevel;

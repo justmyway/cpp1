@@ -85,6 +85,10 @@ Enemy * EnemyGenerator::GenerateEnemy(int level)
 	while (returnEnemy == NULL) {
 		int index = rand() % enemies->size();
 
+		if (level == 99 && enemies->at(index)->GetLevel() == 99) {
+			return enemies->at(index)->Clone();
+		}
+
 		if (enemies->at(index)->GetLevel() >= minLevel && enemies->at(index)->GetLevel() <= maxLevel)
 			returnEnemy = enemies->at(index)->Clone();
 	}

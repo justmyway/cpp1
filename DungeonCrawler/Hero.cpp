@@ -138,6 +138,11 @@ bool Hero::UpGrade(string value)
 	return true;
 }
 
+void Hero::Resting()
+{
+	lifePoints = maxLifePoints;
+}
+
 vector<string>* Hero::GetPosions()
 {
 	return new vector<string>();

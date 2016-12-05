@@ -16,7 +16,7 @@ void RoomGenerator::setFloorDimensions(const int width, const int height) {
 	roomHeightFloor = height;
 }
 
-Room *** RoomGenerator::GenerateFloor(int beginX, int beginY) {
+Room *** RoomGenerator::GenerateFloor(int beginX, int beginY, int floorLevel) {
 	floor = new Room**[roomWidthFloor];
 	for (int x = 0; x < roomWidthFloor; x++) {
 		floor[x] = new Room*[roomHeightFloor];
@@ -25,15 +25,15 @@ Room *** RoomGenerator::GenerateFloor(int beginX, int beginY) {
 		}
 	}
 
-	floor[beginX][beginY] = new Room();
+	floor[beginX][beginY] = new Room(floorLevel);
 
 	//create floor
-	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1);
+	CreateNeighbors(floor[beginX][beginY], beginX, beginY, 1, floorLevel);
 	
 	return floor;
 }
 
-int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms) {
+int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms, int floorLevel) {
 	// determ max rooms to create: first has 4 posibilities
 	unsigned int maxRoomsToCreate = (amountOfRooms == 1 ? 4 : 3);
 
@@ -63,7 +63,7 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 		posibleNeighbors.pop_back();
 
 		if (floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] == NULL) {
-			floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = new Room();
+			floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = new Room(floorLevel);
 		}
 
 		//linking rooms
@@ -73,7 +73,7 @@ int RoomGenerator::CreateNeighbors(Room * room, int x, int y, int amountOfRooms)
 		floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)] = floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)];
 
 		//creating new rooms
-		int returnRoomAmount = CreateNeighbors(floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)], get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms);
+		int returnRoomAmount = CreateNeighbors(floor[get<0>(posibleNeighbor)][get<1>(posibleNeighbor)], get<0>(posibleNeighbor), get<1>(posibleNeighbor), amountOfTotalRooms, floorLevel);
 		if (returnRoomAmount > amountOfTotalRooms)
 			amountOfTotalRooms = returnRoomAmount;
 

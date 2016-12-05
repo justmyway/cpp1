@@ -22,6 +22,7 @@ class Hero
 		bool TakeDamage(int);
 		bool CanLevelUp();
 		bool UpGrade(string);
+		void Resting();
 		vector<string> * GetPosions();
 		vector<string> * GetObjects();
 

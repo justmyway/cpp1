@@ -6,13 +6,13 @@
 #include "Room.h"
 #include "Hero.h"
 
-Room::Room()
+Room::Room(int floorLevel)
 {
 	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
 	enemies = new vector<Enemy *>();
 
-	floorLevel = 1;
+	floorLevel = floorLevel;
 	noEnemies = true;
 }
 
@@ -23,7 +23,8 @@ Room::~Room()
 	delete neighbors;
 }
 
-void Room::Enter(Hero * playerEnter) {
+void Room::Enter(Hero * playerEnter, bool start = false) {
+	startfield = start;
 	visited = true;
 	player = playerEnter;
 
@@ -75,6 +76,14 @@ void Room::SetEndBoss()
 	enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(99));
 }
 
+void Room::GenEnemies()
+{
+	int amountOfEnemies = rand() % 2 + 1;
+	for (int i = 0; i < amountOfEnemies; i++) {
+		enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(floorLevel));
+	}
+}
+
 string Room::ToString() {
 	string rep;
 
@@ -84,8 +93,15 @@ string Room::ToString() {
 	else {
 		if (player != NULL) {
 			rep += "P";
-		}
-		else {
+		} else if (startfield) {
+			rep += "S";
+		} else if (enemies->size() == 1 && enemies->at(0)->GetLevel() == 99) {
+			rep += "E";
+		} else if (NeighborExists(Neighbor::Down)) {
+			rep += "L";
+		} else if (NeighborExists(Neighbor::Up)) {
+			rep += "H";
+		} else {
 			rep += "N";
 		}
 	}

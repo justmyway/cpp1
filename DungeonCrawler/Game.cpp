@@ -31,7 +31,7 @@ Game::~Game()
 {
 	delete player;
 	delete phase;
-	delete dungeon
+	delete dungeon;
 }
 
 
@@ -45,7 +45,7 @@ void Game::Play() {
 	int buildFloor = 0;
 
 	while (buildFloor < 10) {
-		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY));
+		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY, buildFloor+1));
 		
 		//finding room to connect to
 		if (buildFloor != 0) {
@@ -54,15 +54,16 @@ void Game::Play() {
 				startX = rand() % (floorDimensionX - 1);
 				startY = rand() % (floorDimensionY - 1);
 
-				if (dungeon->at(buildFloor)[startX][startY] != NULL && dungeon->at(buildFloor-1)[startX][startY]) {
-					dungeon->at(buildFloor)[startX][startY]->SetRoomToUpper();
+				if (dungeon->at(buildFloor)[startX][startY] != NULL && dungeon->at(buildFloor-1)[startX][startY] != NULL) {
+					dungeon->at(buildFloor)[startX][startY]->ConnectNeighbor(Neighbor::Up, dungeon->at(buildFloor - 1)[startX][startY]);
+					dungeon->at(buildFloor - 1)[startX][startY]->ConnectNeighbor(Neighbor::Down, dungeon->at(buildFloor)[startX][startY]);
 					connected = true;
 				}
 			}
 		}
 		
 		buildFloor++;
-		if (buildFloor == 9) {
+		if (buildFloor == 10) {
 			bool bigGuyPut = false;
 			while (!bigGuyPut) {
 				startX = rand() % (floorDimensionX - 1);
@@ -77,8 +78,8 @@ void Game::Play() {
 	}
 	
 	currentFloor = 0;
-	dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY]->Enter(player);
-	player->MoveTo(dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY]);
+	dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]->Enter(player, true);
+	player->MoveTo(dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]);
 	// floor setup
 
 	while (!finished) {
@@ -123,6 +124,11 @@ void Game::SetPhase(string newPhase)
 	}
 }
 
+void Game::MoveFloor(int level)
+{
+	currentFloor = currentFloor + level;
+}
+
 void Game::FinishGame()
 {
 	finished = true;
@@ -135,7 +141,7 @@ void Game::DrawFloor() {
 	vector<string> * floorRep = new vector<string>();
 
 	floorRep->push_back("");
-	floorRep->push_back("Verdieping: ");
+	floorRep->push_back("Verdieping: " + to_string(currentFloor + 1));
 
 	for (int y = floorDimensionY - 1; y >= 0; y--) {
 		
@@ -176,8 +182,6 @@ void Game::DrawFloor() {
 	floorRep->push_back("");
 
 	ConsoleWriter::getInstance().WriteLine(floorRep);
-
-	delete floor;
 }
 
 void Game::SetupCustomPlayer()
@@ -214,8 +218,11 @@ void Game::SetupCustomPlayer()
 
 void Game::SetupDebugPlayer()
 {
-	floorDimensionX = 8;
-	floorDimensionY = 8;
+	/*floorDimensionX = 8;
+	floorDimensionY = 8;*/
+
+	floorDimensionX = 4;
+	floorDimensionY = 4;
 
 	player = new Hero("Mikes wife");
 
