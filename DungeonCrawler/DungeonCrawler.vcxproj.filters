@@ -102,6 +102,15 @@
     <ClInclude Include="LevelUpGamePhase.h">
       <Filter>Header Files\GamePhases</Filter>
     </ClInclude>
+    <ClInclude Include="Posion.h">
+      <Filter>Header Files\Model\CarryItems</Filter>
+    </ClInclude>
+    <ClInclude Include="Armour.h">
+      <Filter>Header Files\Model\CarryItems</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -154,6 +163,15 @@
     </ClCompile>
     <ClCompile Include="LevelUpGamePhase.cpp">
       <Filter>Source Files\GamePhases</Filter>
+    </ClCompile>
+    <ClCompile Include="Posion.cpp">
+      <Filter>Source Files\Model\CarryItems</Filter>
+    </ClCompile>
+    <ClCompile Include="Armour.cpp">
+      <Filter>Source Files\Model\CarryItems</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGenerator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

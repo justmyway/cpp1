@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Armour.h" />
     <ClInclude Include="CarryItem.h" />
     <ClInclude Include="ConsoleReader.h" />
     <ClInclude Include="ConsoleWriter.h" />
@@ -157,7 +158,9 @@
     <ClInclude Include="Hero.h" />
     <ClInclude Include="IGamePhase.h" />
     <ClInclude Include="InRoomGamePhase.h" />
+    <ClInclude Include="ItemGenerator.h" />
     <ClInclude Include="LevelUpGamePhase.h" />
+    <ClInclude Include="Posion.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="RoomPhraseGenerator.h" />
@@ -165,6 +168,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Armour.cpp" />
     <ClCompile Include="CarryItem.cpp" />
     <ClCompile Include="ConsoleReader.cpp" />
     <ClCompile Include="ConsoleWriter.cpp" />
@@ -177,7 +181,9 @@
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="IGamePhase.cpp" />
     <ClCompile Include="InRoomGamePhase.cpp" />
+    <ClCompile Include="ItemGenerator.cpp" />
     <ClCompile Include="LevelUpGamePhase.cpp" />
+    <ClCompile Include="Posion.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="RoomPhraseGenerator.cpp" />
