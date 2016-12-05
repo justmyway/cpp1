@@ -61,6 +61,11 @@ void Game::Play() {
 		phase->Run();
 	}
 
+	if (player->GetLifePoints() <= 0)
+		ConsoleWriter::getInstance().WriteLine(new vector<string>{"", "HAHAHAHAHHAHAHHAHAA", "Je bent dood....", "", "!!! GAME OVER !!!"});
+
+	system("PAUSE");
+
 	//remove whole dungeon
 	while (dungeon->size() != 0) {
 		Room *** floor = dungeon->back();
@@ -92,6 +97,11 @@ void Game::SetPhase(string newPhase)
 		ConsoleWriter::getInstance().WriteLine("Phase not recognised");
 		exit(EXIT_FAILURE);
 	}
+}
+
+void Game::FinishGame()
+{
+	finished = true;
 }
 
 void Game::DrawFloor() {

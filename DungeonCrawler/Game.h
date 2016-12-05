@@ -16,6 +16,7 @@ class Game
 
 		void Play();
 		void SetPhase(string);
+		void FinishGame();
 
 		void DrawFloor();
 	private:

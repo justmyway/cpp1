@@ -217,4 +217,7 @@ void FightGamePhase::FightBeasts()
 			attacked = true;
 		}
 	}
+
+	if (player->GetLifePoints() <= 0)
+		game->FinishGame();
 }

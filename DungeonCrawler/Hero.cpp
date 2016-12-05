@@ -74,6 +74,11 @@ int Hero::GetPower()
 	return 0;
 }
 
+int Hero::GetLifePoints()
+{
+	return lifePoints;
+}
+
 int Hero::GetAttackChance()
 {
 	return attackChance;

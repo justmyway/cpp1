@@ -17,6 +17,7 @@ class Hero
 		
 		void GiveXp(int);
 		int GetPower();
+		int GetLifePoints();
 		int GetAttackChance();
 		bool TakeDamage(int);
 		bool CanLevelUp();
