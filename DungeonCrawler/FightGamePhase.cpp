@@ -179,6 +179,10 @@ void FightGamePhase::FightBeasts()
 				
 					int xp = player->GetLocation()->GetEnemies()->at(value)->DiedGetxp();
 					if (xp > 0) {
+						if (xp == 999) {
+							game->FinishGame();
+						}
+
 						player->GiveXp(xp);
 						ConsoleWriter::getInstance().WriteLine("Je hebt hem vermoord!");
 						delete player->GetLocation()->GetEnemies()->at(value);

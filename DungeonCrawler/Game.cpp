@@ -86,8 +86,12 @@ void Game::Play() {
 		phase->Run();
 	}
 
-	if (player->GetLifePoints() <= 0)
-		ConsoleWriter::getInstance().WriteLine(new vector<string>{"", "HAHAHAHAHHAHAHHAHAA", "Je bent dood....", "", "!!! GAME OVER !!!"});
+	if (player->GetLifePoints() <= 0) {
+		ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "HAHAHAHAHHAHAHHAHAA", "Je bent dood....", "", "!!! GAME OVER !!!" });
+	}
+	else {
+		ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "JE HEBT GEWONNE!!!!!!!", "Het monster is dood!!", "" });
+	}
 
 	system("PAUSE");
 

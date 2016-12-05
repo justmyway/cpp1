@@ -58,6 +58,9 @@ int Enemy::GetPower()
 int Enemy::DiedGetxp()
 {
 	if (lifePoints <= 0)
+		if (level == "BAAS")
+			return 999;
+
 		return xp;
 
 	return 0;
