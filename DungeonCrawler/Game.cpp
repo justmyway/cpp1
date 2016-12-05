@@ -46,15 +46,39 @@ void Game::Play() {
 
 	while (buildFloor < 10) {
 		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY));
+		
+		//finding room to connect to
+		if (buildFloor != 0) {
+			bool connected = false;
+			while (!connected) {
+				startX = rand() % (floorDimensionX - 1);
+				startY = rand() % (floorDimensionY - 1);
+
+				if (dungeon->at(buildFloor)[startX][startY] != NULL && dungeon->at(buildFloor-1)[startX][startY]) {
+					dungeon->at(buildFloor)[startX][startY]->SetRoomToUpper();
+					connected = true;
+				}
+			}
+		}
+		
 		buildFloor++;
-		if (buildFloor < 10) {
-			//random pick on floor
+		if (buildFloor == 9) {
+			bool bigGuyPut = false;
+			while (!bigGuyPut) {
+				startX = rand() % (floorDimensionX - 1);
+				startY = rand() % (floorDimensionY - 1);
+
+				if (dungeon->at(9)[startX][startY] != NULL){
+					dungeon->at(9)[startX][startY]->SetEndBoss();
+					bigGuyPut = true;
+				}
+			}
 		}
 	}
 	
 	currentFloor = 0;
-	dungeon->at(currentFloor)[startX][startY]->Enter(player);
-	player->MoveTo(dungeon->at(currentFloor)[startX][startY]);
+	dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY]->Enter(player);
+	player->MoveTo(dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY]);
 	// floor setup
 
 	while (!finished) {
