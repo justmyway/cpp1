@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Room.h"
 #include "Game.h"
+#include "CarryItem.h"
 
 InRoomGamePhase::InRoomGamePhase(Hero * thePlayer, Game * theGame) : IGamePhase(thePlayer, theGame)
 {
@@ -118,7 +119,8 @@ vector<string> InRoomGamePhase::CreateActions()
 	}
 
 	// search room
-	actions.push_back("zoek");
+	if(player->GetLocation()->AmountOfItems() > 0)
+		actions.push_back("zoek");
 
 	// rest if no enemies
 	if (player->GetLocation()->AmountOfEnemies() == 0)

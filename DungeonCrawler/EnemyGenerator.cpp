@@ -2,9 +2,13 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include <algorithm>
+
 #include "EnemyGenerator.h"
 
 #include "FileReader.h"
+
+using std::min;
 
 
 EnemyGenerator::EnemyGenerator()
@@ -111,8 +115,13 @@ unsigned int EnemyGenerator::split(std::string &txt, std::vector<std::string> &s
 		pos = txt.find(ch, initialPos);
 	}
 
+	int smallest = pos;
+	if (smallest > txt.size())
+		smallest = txt.size();
+
 	// Add the last one
-	strs.push_back(txt.substr(initialPos, std::min(pos, txt.size()) - initialPos + 1));
+	//strs.push_back(txt.substr(initialPos, (std::min(pos, txt.size()) - initialPos + 1)));
+	strs.push_back(txt.substr(initialPos, (smallest) - initialPos + 1));
 
 	return strs.size();
 }

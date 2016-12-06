@@ -2,6 +2,7 @@
 
 class Hero;
 class Enemy;
+class CarryItem;
 
 class FightGamePhase;
 
@@ -18,6 +19,7 @@ class Room
 		void MoveTo(Neighbor);
 		bool Visited();
 		int AmountOfEnemies();
+		int AmountOfItems();
 
 		vector<Enemy*> * GetEnemies();
 
@@ -39,5 +41,6 @@ class Room
 		Room * GetNeighbor(Neighbor);
 
 		vector<Enemy *> * enemies;
+		vector<CarryItem *> * items;
 };
 

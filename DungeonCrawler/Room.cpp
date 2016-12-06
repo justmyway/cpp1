@@ -2,6 +2,7 @@
 
 #include "RoomPhraseGenerator.h"
 #include "Enemygenerator.h"
+#include "itemGenerator.h"
 
 #include "Room.h"
 #include "Hero.h"
@@ -11,6 +12,7 @@ Room::Room(int floorLevel)
 	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
 	enemies = new vector<Enemy *>();
+	items = ItemGenerator::getInstance().GenerateRoomItems();
 
 	floorLevel = floorLevel;
 	noEnemies = true;
@@ -21,6 +23,11 @@ Room::~Room()
 {
 	delete description;
 	delete neighbors;
+	for (auto const& item : *items) {
+		delete item;
+	}
+	items->clear();
+	delete items;
 }
 
 void Room::Enter(Hero * playerEnter, bool start = false) {
@@ -64,6 +71,11 @@ bool Room::Visited()
 int Room::AmountOfEnemies()
 {
 	return enemies->size();
+}
+
+int Room::AmountOfItems()
+{
+	return items->size();
 }
 
 vector<Enemy*>* Room::GetEnemies()
