@@ -49,8 +49,14 @@ void InRoomGamePhase::Run()
 				case Str2Int("loop"):
 					WalkMove();
 					break;
+				case Str2Int("zoek"):
+					TakeItemsFromRoom();
+					break;
 				case Str2Int("rust"):
 					Resting();
+					break;
+				case Str2Int("inventaris"):
+					ShowItems();
 					break;
 				case Str2Int("kaart"):
 					game->DrawFloor();
@@ -109,14 +115,8 @@ vector<string> InRoomGamePhase::CreateActions()
 {
 	vector<string> actions;
 
-	// do to enemies
-	if (player->GetLocation()->AmountOfEnemies() > 0) {
-		actions.push_back("vecht");
-		actions.push_back("vlucht");
-	}
-	else {
-		actions.push_back("loop");
-	}
+	// no enemies
+	actions.push_back("loop");
 
 	// search room
 	if(player->GetLocation()->AmountOfItems() > 0)
@@ -127,7 +127,8 @@ vector<string> InRoomGamePhase::CreateActions()
 		actions.push_back("rust");
 
 	// look at inventory
-	actions.push_back("inventaris");
+	if (player->GetObjects().size() > 0 || player->GetPosions().size() > 0)
+		actions.push_back("inventaris");
 
 	// look at map
 	actions.push_back("kaart");
@@ -187,6 +188,25 @@ void InRoomGamePhase::WalkMove()
 	}
 }
 
+void InRoomGamePhase::TakeItemsFromRoom()
+{
+	if (player->GetLocation()->AmountOfItems() == 0)
+		return;
+
+	ConsoleWriter::getInstance().WriteLine("In de kamer zijn de volgende items gevonden:");
+
+	vector<CarryItem*> * items = player->GetLocation()->GetItems();
+
+	for (auto const& item : *items) {
+		ConsoleWriter::getInstance().WriteLine("   - " + item->GetName() + " : " + item->GetFunction());
+		player->GiveItem(item);
+	}
+
+	items->clear();
+
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Je hebt deze items opgepakt", "" });
+}
+
 void InRoomGamePhase::Resting()
 {
 	ConsoleWriter::getInstance().WriteLine("Zow even een tukky, hopen dat ik niet word aan gevallen!");
@@ -201,4 +221,19 @@ void InRoomGamePhase::Resting()
 	else {
 		ConsoleWriter::getInstance().WriteLine("Dat was een lekker tukky");
 	}
+}
+
+void InRoomGamePhase::ShowItems()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Het volgende zit in je inventaris:", "Standaard:"});
+
+	for (auto const& item : player->GetObjects())
+		ConsoleWriter::getInstance().WriteLine("   - " + item->GetName() + " : " + item->GetFunction());
+
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Poisons:" });
+
+	for (auto const& item : player->GetPosions())
+		ConsoleWriter::getInstance().WriteLine("   - " + item->GetName() + " : " + item->GetFunction());
+
+	ConsoleWriter::getInstance().WriteLine("");
 }

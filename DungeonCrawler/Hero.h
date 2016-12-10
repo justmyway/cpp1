@@ -16,6 +16,8 @@ class Hero
 		Room * GetLocation();
 		
 		void GiveXp(int);
+		void GiveItem(CarryItem*);
+		bool DrinkItem(string);
 		int GetPower();
 		int GetLifePoints();
 		int GetAttackChance();
@@ -23,8 +25,8 @@ class Hero
 		bool CanLevelUp();
 		bool UpGrade(string);
 		void Resting();
-		vector<string> * GetPosions();
-		vector<string> * GetObjects();
+		vector<CarryItem*> GetPosions();
+		vector<CarryItem*> GetObjects();
 
 	private:
 		string name;
@@ -37,7 +39,13 @@ class Hero
 		int attackChance;
 		int defence;
 
-		vector<CarryItem> * items;
+		vector<CarryItem*> * items;
+		vector<CarryItem*> * usingPosions;
 		Room * room;
+
+		int TotalAttackChance();
+		int TotalAttack();
+		int TotalDefence();
+		int TotalLifePoints();
 };
 

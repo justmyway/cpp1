@@ -22,6 +22,7 @@ class Room
 		int AmountOfItems();
 
 		vector<Enemy*> * GetEnemies();
+		vector<CarryItem*> * GetItems();
 
 		void SetEndBoss();
 		void GenEnemies();

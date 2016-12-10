@@ -47,6 +47,9 @@ void FightGamePhase::Run()
 				case Str2Int("vlucht"):
 					FleeMove();
 					break;
+				case Str2Int("drink"):
+					Drink();
+					break;
 				default:
 					ConsoleWriter::getInstance().WriteLine("System error: on call " + action);
 					break;
@@ -104,11 +107,8 @@ vector<string> FightGamePhase::CreateActions()
 	actions.push_back("vlucht");
 
 	// drankje drinken
-	if(player->GetPosions()->size() > 0)
-		actions.push_back("drink");
-
-	if (player->GetObjects()->size() > 0)
-		actions.push_back("gebruik");	
+	if(player->GetPosions().size() > 0)
+		actions.push_back("drink");	
 
 	return actions;
 }
@@ -224,4 +224,27 @@ void FightGamePhase::FightBeasts()
 
 	if (player->GetLifePoints() <= 0)
 		game->FinishGame();
+}
+
+void FightGamePhase::Drink()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Welke pioson wil je drinken?", "" });
+
+	int index = 0;
+	for (auto const& item : player->GetPosions()) {
+		ConsoleWriter::getInstance().WriteLine("[" + to_string(index) + "]  " + item->GetName() + " : " + item->GetFunction());
+		index++;
+	}
+
+	bool drunk = false;
+
+	while (!drunk)
+	{
+		int value = atoi(ConsoleReader::getInstance().ReadLine().c_str());
+
+		if (value >= 0 && value <= player->GetPosions().size() - 1) {
+			if(player->DrinkItem(player->GetPosions().at(value)->GetFunction()))
+				drunk = true;
+		}
+	}
 }

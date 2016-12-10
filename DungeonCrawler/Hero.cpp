@@ -12,7 +12,8 @@ Hero::Hero(string newName)
 	attack = 2;
 	attackChance = 40;
 	defence = 40;
-	items = new vector<CarryItem>();
+	items = new vector<CarryItem*>();
+	usingPosions = new vector<CarryItem*>();
 
 	srand(time_t(0));
 }
@@ -29,11 +30,11 @@ vector<string> * Hero::ToString()
 
 	specs->push_back("De eigenschappen van " + name + " : ");
 	specs->push_back("level	             : " + to_string(level));
-	specs->push_back("levens              : " + to_string(lifePoints));
+	specs->push_back("levens              : " + to_string(TotalLifePoints()));
 	specs->push_back("xp                  : " + to_string(experancePoints));
-	specs->push_back("aanvals kracht      : " + to_string(attack));
-	specs->push_back("kans van slagen     : " + to_string(attackChance));
-	specs->push_back("verdedigings slagen : " + to_string(defence));
+	specs->push_back("aanvals kracht      : " + to_string(TotalAttack()));
+	specs->push_back("kans van slagen     : " + to_string(TotalAttackChance()));
+	specs->push_back("verdedigings slagen : " + to_string(TotalDefence()));
 	specs->push_back("");
 
 	return specs;
@@ -41,10 +42,12 @@ vector<string> * Hero::ToString()
 
 string Hero::ToStringHealth()
 {
-	return string("Je hebt nog " + to_string(lifePoints) + " van de " + to_string(maxLifePoints) + " levenspunten over.");
+	return string("Je hebt nog " + to_string(TotalLifePoints()) + " van de " + to_string(maxLifePoints) + " levenspunten over.");
 }
 
-void Hero::MoveTo(Room * movedTo) {
+void Hero::MoveTo(Room * movedTo){
+	for(auto item : *usingPosions) delete item;
+	usingPosions->clear();
 	room = movedTo;
 }
 
@@ -63,25 +66,45 @@ void Hero::GiveXp(int points)
 		needToLevel++;
 }
 
+void Hero::GiveItem(CarryItem * item)
+{
+	items->push_back(item);
+}
+
+bool Hero::DrinkItem(string itemString)
+{
+	int index = 0;
+	for (auto const& item : *items) {
+		if(item->GetFunction() == itemString){
+			usingPosions->push_back(item);
+			items->erase(items->begin() + index);
+			return true;
+		}
+		index++;
+	}
+
+	return false;
+}
+
 int Hero::GetPower()
 {
 	//srand(time_t(0));
 	int change = rand() % 100 + 1;
 
-	if (attackChance >= change)
-		return attack;
+	if (TotalAttackChance() >= change)
+		return TotalAttack();
 
 	return 0;
 }
 
 int Hero::GetLifePoints()
 {
-	return lifePoints;
+	return TotalLifePoints();
 }
 
 int Hero::GetAttackChance()
 {
-	return attackChance;
+	return TotalAttackChance();
 }
 
 bool Hero::TakeDamage(int strength)
@@ -89,7 +112,7 @@ bool Hero::TakeDamage(int strength)
 	//srand(time_t(0));
 	int change = rand() % 100 + 1;
 
-	if (defence < change) {
+	if (TotalDefence() < change) {
 		lifePoints -= strength;
 		return true;
 	}
@@ -143,12 +166,88 @@ void Hero::Resting()
 	lifePoints = maxLifePoints;
 }
 
-vector<string>* Hero::GetPosions()
+vector<CarryItem*> Hero::GetPosions()
 {
-	return new vector<string>();
+	vector<CarryItem*> poisons = vector<CarryItem*>();
+
+	for (auto const& item : *items)
+		if (!item->StillValid())
+			poisons.push_back(item);
+
+	return poisons;
 }
 
-vector<string>* Hero::GetObjects()
+vector<CarryItem*> Hero::GetObjects()
 {
-	return new vector<string>();
+	vector<CarryItem*> objects = vector<CarryItem*>();
+
+	for (auto const& item : *items)
+		if (item->StillValid())
+			objects.push_back(item);
+
+	return objects;
+}
+
+int Hero::TotalAttackChance()
+{
+	int totalAttackChance = attackChance;
+
+	for (auto const& item : *usingPosions) {
+		totalAttackChance += item->AttackChance();
+	}
+
+	for (auto const& item : *items) {
+		if(item->StillValid())
+			totalAttackChance += item->AttackChance();
+	}
+
+	return totalAttackChance > 100 ? 100 : totalAttackChance;
+}
+
+int Hero::TotalAttack()
+{
+	int totalAttack = attack;
+
+	for (auto const& item : *usingPosions) {
+		totalAttack += item->Attack();
+	}
+
+	for (auto const& item : *items) {
+		if (item->StillValid())
+			totalAttack += item->Attack();
+	}
+
+	return totalAttack;
+}
+
+int Hero::TotalDefence()
+{
+	int totalDefence = defence;
+
+	for (auto const& item : *usingPosions) {
+		totalDefence += item->DefenceChance();
+	}
+
+	for (auto const& item : *items) {
+		if (item->StillValid())
+			totalDefence += item->DefenceChance();
+	}
+
+	return totalDefence > 100 ? 100 : totalDefence;
+}
+
+int Hero::TotalLifePoints()
+{
+	int totalLife = lifePoints;
+
+	for (auto const& item : *usingPosions) {
+		totalLife += item->LifePoints();
+	}
+
+	for (auto const& item : *items) {
+		if (item->StillValid())
+			totalLife += item->LifePoints();
+	}
+
+	return totalLife;
 }

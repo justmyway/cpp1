@@ -83,6 +83,18 @@ vector<Enemy*>* Room::GetEnemies()
 	return enemies;
 }
 
+vector<CarryItem*>* Room::GetItems()
+{
+	vector<CarryItem*> * allItems = new vector<CarryItem*>();
+
+	for (auto item : *items) {
+		allItems->push_back(item);
+	}
+	items->clear();
+
+	return allItems;
+}
+
 void Room::SetEndBoss()
 {
 	enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(99));

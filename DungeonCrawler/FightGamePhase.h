@@ -17,4 +17,5 @@ private:
 
 	void FleeMove();
 	void FightBeasts();
+	void Drink();
 };
