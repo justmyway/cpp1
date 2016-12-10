@@ -7,15 +7,15 @@
 #include "Room.h"
 #include "Hero.h"
 
-Room::Room(int floorLevel)
+Room::Room(int newfloorLevel)
 {
 	neighbors = new vector<tuple<Neighbor, Room *>>();
 	description = RoomPhraseGenerator::getInstance().CreateRoomPhrase();
 	enemies = new vector<Enemy *>();
 	items = ItemGenerator::getInstance().GenerateRoomItems();
 
-	floorLevel = floorLevel;
-	noEnemies = true;
+	floorLevel = newfloorLevel;
+	noEnemies = false;
 }
 
 
@@ -106,6 +106,11 @@ void Room::GenEnemies()
 	for (int i = 0; i < amountOfEnemies; i++) {
 		enemies->push_back(EnemyGenerator::getInstance().GenerateEnemy(floorLevel));
 	}
+}
+
+bool Room::StartRoomOfFloor()
+{
+	return NeighborExists(Neighbor::Up);
 }
 
 string Room::ToString() {

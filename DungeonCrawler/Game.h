@@ -17,6 +17,7 @@ class Game
 		void Play();
 		void SetPhase(string);
 		void MoveFloor(int);
+		void PosibleSave();
 		void FinishGame();
 
 		void DrawFloor();
@@ -25,14 +26,13 @@ class Game
 		int floorDimensionY;
 		bool finished;
 
-		bool debug = true;
-
 		vector<Room ***> * dungeon;
 		int currentFloor;
 		Hero * player;
 		IGamePhase * phase;
 
 		void SetupCustomPlayer();
+		void LoadCustomPlayer();
 		void SetupDebugPlayer();
 };
 

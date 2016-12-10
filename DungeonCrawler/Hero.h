@@ -8,6 +8,7 @@ class Hero
 {
 	public:
 		Hero(string);
+		Hero(string, int, int, int, int, int, int, int);
 		~Hero();
 
 		vector<string> * ToString();
@@ -18,6 +19,7 @@ class Hero
 		void GiveXp(int);
 		void GiveItem(CarryItem*);
 		bool DrinkItem(string);
+		string GetName();
 		int GetPower();
 		int GetLifePoints();
 		int GetAttackChance();
@@ -27,6 +29,8 @@ class Hero
 		void Resting();
 		vector<CarryItem*> GetPosions();
 		vector<CarryItem*> GetObjects();
+
+		vector<string> Save();
 
 	private:
 		string name;

@@ -3,19 +3,42 @@
 #include "RoomGenerator.h"
 #include "EnemyGenerator.h"
 
+#include "FileReader.h"
+
 #include "Game.h"
 
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <direct.h>
+#include <fstream>  
+#include <windows.h>
 
 Game::Game()
 {
+	currentFloor = 0;
 	// get input to initialize game
-	if (debug) {
-		SetupDebugPlayer();
-	} else {
-		SetupCustomPlayer();
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "--- How do you want to start? ---", "[ new | load | debug ]" });
+
+	bool choice = false;
+
+	while (!choice) {
+		string choiceLine = ConsoleReader::getInstance().ReadLine();
+
+		if (choiceLine == "new") {
+			SetupCustomPlayer();
+			choice = true;
+		}
+
+		if (choiceLine == "load") {
+			LoadCustomPlayer();
+			choice = true;
+		}
+
+		if (choiceLine == "debug") {
+			SetupDebugPlayer();
+			choice = true;
+		}
 	}
 
 	finished = false;
@@ -77,9 +100,21 @@ void Game::Play() {
 		}
 	}
 	
-	currentFloor = 0;
-	dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]->Enter(player, true);
-	player->MoveTo(dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]);
+	//todo find down on current floor
+	if (currentFloor == 0) {
+		dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]->Enter(player, true);
+		player->MoveTo(dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]);
+	}
+	else {
+		for (int x = 0; x < floorDimensionX; x++) {
+			for (int y = 0; y < floorDimensionY; y++) {
+				if (dungeon->at(currentFloor)[x][y] != NULL && dungeon->at(currentFloor)[x][y]->StartRoomOfFloor()) {
+					dungeon->at(currentFloor)[x][y]->Enter(player, false);
+					player->MoveTo(dungeon->at(currentFloor)[x][y]);
+				}					
+			}
+		}
+	}
 	// floor setup
 
 	while (!finished) {
@@ -131,6 +166,38 @@ void Game::SetPhase(string newPhase)
 void Game::MoveFloor(int level)
 {
 	currentFloor = currentFloor + level;
+}
+
+void Game::PosibleSave()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{"", "--- You want to save the game? ---", "(yes / no)", ""});
+
+	bool saveChoice = false;
+
+	while (!saveChoice) {
+		string input = ConsoleReader::getInstance().ReadLine();
+
+		if (input == "no")
+			saveChoice = true;
+
+		if (input == "yes") {
+			_mkdir("c:/Dungeon Crawler");
+			std::ofstream of("C:\\Dungeon Crawler\\" + player->GetName() + ".dun");
+			for (auto const& line : player->Save()) {
+				of << line;
+			}
+			of << "floor level\n";
+			of << "["+ to_string(currentFloor) +"]\n";
+
+			of << "floor width\n";
+			of << "[" + to_string(floorDimensionX) + "]\n";
+
+			of << "floor height\n";
+			of << "[" + to_string(floorDimensionY) + "]\n";
+
+			saveChoice = true;
+		}
+	}
 }
 
 void Game::FinishGame()
@@ -197,7 +264,7 @@ void Game::SetupCustomPlayer()
 	{
 		string input = ConsoleReader::getInstance().ReadLine();
 		int value = atoi(input.c_str());
-		if (value > 4 && value <= 100)
+		if (value > 3 && value <= 100)
 			floorDimensionX = value;
 	}
 
@@ -206,7 +273,7 @@ void Game::SetupCustomPlayer()
 	{
 		string input = ConsoleReader::getInstance().ReadLine();
 		int value = atoi(input.c_str());
-		if (value > 4 && value <= 100)
+		if (value > 3 && value <= 100)
 			floorDimensionY = value;
 	}
 
@@ -220,11 +287,37 @@ void Game::SetupCustomPlayer()
 	player = new Hero(name);
 }
 
+void Game::LoadCustomPlayer()
+{
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Voer de naam van het bestand in dat je wil laden"});
+
+	bool loadChoice = false;
+	while (!loadChoice) {
+
+		string fileName = ConsoleReader::getInstance().ReadLine();
+
+		vector<string> * lines = FileReader::getInstance().ReadFile("C:\\Dungeon Crawler\\" + fileName + ".dun", true);
+
+		if (lines->size() > 0) {
+
+			player = new Hero(lines->at(0).substr(1, lines->at(0).size() - 2), ToInt(lines->at(1).substr(1, lines->at(1).size() - 2)), ToInt(lines->at(3).substr(1, lines->at(3).size() - 2)), ToInt(lines->at(2).substr(1, lines->at(2).size() - 2)), ToInt(lines->at(4).substr(1, lines->at(4).size() - 2)), ToInt(lines->at(5).substr(1, lines->at(5).size() - 2)), ToInt(lines->at(6).substr(1, lines->at(6).size() - 2)), ToInt(lines->at(7).substr(1, lines->at(7).size() - 2)));
+
+			currentFloor = ToInt(lines->at(8).substr(1, lines->at(8).size() - 2));
+			floorDimensionX = ToInt(lines->at(9).substr(1, lines->at(9).size() - 2));
+			floorDimensionY = ToInt(lines->at(10).substr(1, lines->at(10).size() - 2));
+		
+			loadChoice = true;
+		}
+		else {
+			ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Probeer opnieuw" });
+		}
+
+		delete lines;
+	}
+}
+
 void Game::SetupDebugPlayer()
 {
-	/*floorDimensionX = 8;
-	floorDimensionY = 8;*/
-
 	floorDimensionX = 4;
 	floorDimensionY = 4;
 

@@ -26,7 +26,7 @@ vector<string> * FileReader::ReadFile(string path, bool onlyReadBrackets = false
 		myfile.close();
 	} else {
 		ConsoleWriter::getInstance().WriteLine(new vector<string>{ "A ERROR OCCURED READING FILE IN LOCATION:", path });
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 
 	return lines;

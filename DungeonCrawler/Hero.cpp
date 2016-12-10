@@ -18,6 +18,22 @@ Hero::Hero(string newName)
 	srand(time_t(0));
 }
 
+Hero::Hero(string newName, int newLevel, int newLifePoints, int experiancePoints, int newMaxLifePoints, int newAttackPoints, int newAttackChance, int newDefencePoints)
+{
+	name = newName;
+	level = newLevel;
+	lifePoints = newLifePoints;
+	maxLifePoints = newMaxLifePoints;
+	experancePoints = experiancePoints;
+	attack = newAttackPoints;
+	attackChance = newAttackChance;
+	defence = newDefencePoints;
+	items = new vector<CarryItem*>();
+	usingPosions = new vector<CarryItem*>();
+
+	srand(time_t(0));
+}
+
 
 Hero::~Hero()
 {
@@ -84,6 +100,11 @@ bool Hero::DrinkItem(string itemString)
 	}
 
 	return false;
+}
+
+string Hero::GetName()
+{
+	return name;
 }
 
 int Hero::GetPower()
@@ -186,6 +207,37 @@ vector<CarryItem*> Hero::GetObjects()
 			objects.push_back(item);
 
 	return objects;
+}
+
+vector<string> Hero::Save()
+{
+	vector<string> saveLines = vector<string>();
+
+	saveLines.push_back("Name\n");
+	saveLines.push_back("["+name+"]\n");
+
+	saveLines.push_back("Level\n");
+	saveLines.push_back("[" + to_string(level) + "]\n");
+
+	saveLines.push_back("Experiance\n");
+	saveLines.push_back("[" + to_string(experancePoints) + "]\n");
+
+	saveLines.push_back("Life points\n");
+	saveLines.push_back("[" + to_string(lifePoints) + "]\n");
+
+	saveLines.push_back("Max life points\n");
+	saveLines.push_back("[" + to_string(maxLifePoints) + "]\n");
+
+	saveLines.push_back("Attack points\n");
+	saveLines.push_back("[" + to_string(attack) + "]\n");
+
+	saveLines.push_back("Attack chance\n");
+	saveLines.push_back("[" + to_string(attackChance) + "]\n");
+
+	saveLines.push_back("Defence chance\n");
+	saveLines.push_back("[" + to_string(defence) + "]\n");
+
+	return saveLines;
 }
 
 int Hero::TotalAttackChance()

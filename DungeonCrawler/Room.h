@@ -26,6 +26,7 @@ class Room
 
 		void SetEndBoss();
 		void GenEnemies();
+		bool StartRoomOfFloor();
 		string ToString();
 		string ToStringSouthCoridor();
 		void ConnectNeighbor(Neighbor, Room*);

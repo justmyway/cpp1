@@ -182,6 +182,9 @@ void InRoomGamePhase::WalkMove()
 				if (Str2Int(input.c_str()) == Str2Int("Up")) {
 					game->MoveFloor(-1);
 				}
+				if (Str2Int(input.c_str()) == Str2Int("Down") || Str2Int(input.c_str()) == Str2Int("Up")) {
+					game->PosibleSave();
+				}
 				moved = true;
 			}
 		}
