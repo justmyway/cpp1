@@ -17,7 +17,7 @@ EnemyGenerator::EnemyGenerator()
 
 	enemies = new vector<Enemy*>();
 
-	vector<string> * monsters = FileReader::getInstance().ReadFile("C:\\monsters.txt", true);
+	vector<string> * monsters = FileReader::getInstance().ReadFile("C:\\Dungeon Crawler\\monsters.txt", true);
 	for (auto const& monster : *monsters) {
 		//stripping [ and ]
 		string monsterLine = monster.substr(1, monster.size() - 2);

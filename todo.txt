@@ -1,8 +1,0 @@
-opslaan,
-inlezen,
-objecten gebruiken in kamer
-objecten gebruiken in gevecht
-objecten oppakken
-
-
-PHASE EN ENEMIES WORDEN VERWIJDERD
