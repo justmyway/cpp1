@@ -107,7 +107,7 @@ unsigned int EnemyGenerator::split(std::string &txt, std::vector<std::string> &s
 	strs.clear();
 
 	// Decompose statement
-	while (pos != std::string::npos) {
+	while (strs.size() != 6) {
 		//strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
 		strs.push_back(txt.substr(initialPos, pos - initialPos));
 		initialPos = pos + 1;
