@@ -116,7 +116,7 @@ vector<string> FightGamePhase::CreateActions()
 void FightGamePhase::FleeMove()
 {
 	ConsoleWriter::getInstance().WriteLine("Uitgangen: ");
-	for (auto const& neightbor : *player->GetLocation()->MoveOptions()) {
+	for (auto const& neightbor : player->GetLocation()->MoveOptions()) {
 		string exits = "    - ";
 		exits += ToString(neightbor);
 		exits += " " + RoomPhraseGenerator::getInstance().CreateHallPhrase() + " ";
@@ -146,7 +146,7 @@ void FightGamePhase::FleeMove()
 			input = "West";
 		}
 
-		for (auto const &action : *player->GetLocation()->MoveOptions()) {
+		for (auto const &action : player->GetLocation()->MoveOptions()) {
 			if (Str2Int(input.c_str()) == Str2Int(ToString(action))) {
 				player->GetLocation()->MoveTo(action);
 				moved = true;

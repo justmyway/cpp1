@@ -15,7 +15,7 @@ Room::Room(int newfloorLevel)
 	items = ItemGenerator::getInstance().GenerateRoomItems();
 
 	floorLevel = newfloorLevel;
-	noEnemies = false;
+	noEnemies = true;
 }
 
 
@@ -27,7 +27,12 @@ Room::~Room()
 		delete item;
 	}
 	items->clear();
+	for (auto const& enemy : *enemies) {
+		delete enemy;
+	}
+	enemies->clear();
 	delete items;
+	delete enemies;
 }
 
 void Room::Enter(Hero * playerEnter, bool start = false) {
@@ -44,11 +49,11 @@ void Room::Enter(Hero * playerEnter, bool start = false) {
 	}
 }
 
-vector<Neighbor> * Room::MoveOptions() {
-	vector<Neighbor> * returnNeighbors = new vector<Neighbor>();
+vector<Neighbor> Room::MoveOptions() {
+	vector<Neighbor> returnNeighbors = vector<Neighbor>();
 
 	for (auto const& neighbor : *neighbors)
-		returnNeighbors->push_back(get<0>(neighbor));
+		returnNeighbors.push_back(get<0>(neighbor));
 
 	return returnNeighbors;
 }

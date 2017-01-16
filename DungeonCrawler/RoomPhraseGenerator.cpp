@@ -18,6 +18,9 @@ RoomPhraseGenerator::RoomPhraseGenerator()
 
 RoomPhraseGenerator::~RoomPhraseGenerator()
 {
+	for (auto const& item : *roomDefenitions) {
+		delete item;
+	}
 	delete roomDefenitions;
 	delete hallDefenitions;
 }

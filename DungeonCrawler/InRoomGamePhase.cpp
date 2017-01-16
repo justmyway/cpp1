@@ -84,7 +84,7 @@ void InRoomGamePhase::DisplayDescription()
 	rep->push_back("Beschrijving: " + *player->GetLocation()->description);
 	rep->push_back("");
 	rep->push_back("Uitgangen: ");
-	for (auto const& neightbor : *player->GetLocation()->MoveOptions()) {
+	for (auto const& neightbor : player->GetLocation()->MoveOptions()) {
 		string exits = "    - ";
 		exits += ToString(neightbor);
 		exits += " " + RoomPhraseGenerator::getInstance().CreateHallPhrase() + " ";
@@ -178,7 +178,7 @@ void InRoomGamePhase::WalkMove()
 			input = "Down";
 		}
 
-		for (auto const &action : *player->GetLocation()->MoveOptions()) {
+		for (auto const &action : player->GetLocation()->MoveOptions()) {
 			if (Str2Int(input.c_str()) == Str2Int(ToString(action))) {
 				player->GetLocation()->MoveTo(action);
 				if (Str2Int(input.c_str()) == Str2Int("Down")) {

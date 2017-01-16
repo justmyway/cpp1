@@ -37,7 +37,16 @@ Hero::Hero(string newName, int newLevel, int newLifePoints, int experiancePoints
 
 Hero::~Hero()
 {
+	for (auto const& item : *items) {
+		delete item;
+	}
+	items->clear();
+	for (auto const& enemy : *usingPosions) {
+		delete enemy;
+	}
+	usingPosions->clear();
 	delete items;
+	delete usingPosions;
 }
 
 vector<string> * Hero::ToString()

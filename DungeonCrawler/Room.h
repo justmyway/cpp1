@@ -15,7 +15,7 @@ class Room
 		string * description;
 		
 		void Enter(Hero*, bool);
-		vector<Neighbor> * MoveOptions();
+		vector<Neighbor> MoveOptions();
 		void MoveTo(Neighbor);
 		bool Visited();
 		int AmountOfEnemies();

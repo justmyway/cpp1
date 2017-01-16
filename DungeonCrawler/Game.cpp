@@ -59,17 +59,17 @@ Game::~Game()
 
 
 void Game::Play() {
-	ConsoleWriter::getInstance().WriteLine(new vector<string> { "", "--- A new game will be started ---", ""});
-	
+	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "--- A new game will be started ---", "" });
+
 	// setup starting location
 	int startX = floorDimensionX / 2;
 	int startY = floorDimensionY / 2;
- 	
+
 	int buildFloor = 0;
 
 	while (buildFloor < 10) {
-		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY, buildFloor+1));
-		
+		dungeon->push_back(RoomGenerator::getInstance().GenerateFloor(startX, startY, buildFloor + 1));
+
 		//finding room to connect to
 		if (buildFloor != 0) {
 			bool connected = false;
@@ -77,14 +77,14 @@ void Game::Play() {
 				startX = rand() % (floorDimensionX - 1);
 				startY = rand() % (floorDimensionY - 1);
 
-				if (dungeon->at(buildFloor)[startX][startY] != NULL && dungeon->at(buildFloor-1)[startX][startY] != NULL) {
+				if (dungeon->at(buildFloor)[startX][startY] != NULL && dungeon->at(buildFloor - 1)[startX][startY] != NULL) {
 					dungeon->at(buildFloor)[startX][startY]->ConnectNeighbor(Neighbor::Up, dungeon->at(buildFloor - 1)[startX][startY]);
 					dungeon->at(buildFloor - 1)[startX][startY]->ConnectNeighbor(Neighbor::Down, dungeon->at(buildFloor)[startX][startY]);
 					connected = true;
 				}
 			}
 		}
-		
+
 		buildFloor++;
 		if (buildFloor == 10) {
 			bool bigGuyPut = false;
@@ -92,14 +92,14 @@ void Game::Play() {
 				startX = rand() % (floorDimensionX - 1);
 				startY = rand() % (floorDimensionY - 1);
 
-				if (dungeon->at(9)[startX][startY] != NULL){
+				if (dungeon->at(9)[startX][startY] != NULL) {
 					dungeon->at(9)[startX][startY]->SetEndBoss();
 					bigGuyPut = true;
 				}
 			}
 		}
 	}
-	
+
 	//todo find down on current floor
 	if (currentFloor == 0) {
 		dungeon->at(currentFloor)[floorDimensionX / 2][floorDimensionY / 2]->Enter(player, true);
@@ -111,7 +111,7 @@ void Game::Play() {
 				if (dungeon->at(currentFloor)[x][y] != NULL && dungeon->at(currentFloor)[x][y]->StartRoomOfFloor()) {
 					dungeon->at(currentFloor)[x][y]->Enter(player, false);
 					player->MoveTo(dungeon->at(currentFloor)[x][y]);
-				}					
+				}
 			}
 		}
 	}
@@ -131,18 +131,23 @@ void Game::Play() {
 	system("PAUSE");
 
 	//remove whole dungeon
-	while (dungeon->size() != 0) {
-		Room *** floor = dungeon->back();
-		dungeon->pop_back();
-
+	for (int i = 0; i < dungeon->size(); i++) {
+		Room *** floor = dungeon->at(i);
 		for (int i = floorDimensionX - 1; i >= 0; i--)
 		{
-			for (int j = floorDimensionY - 1; j >= 0; j--)
-				delete floor[i][j];
+			for (int j = floorDimensionY - 1; j >= 0; j--) {
+				if (floor[i][j] != NULL)
+					delete (floor[i][j]);
+			}
 
-			delete[] floor[i];
+			delete[](floor[i]);
 		}
-		delete[] floor;
+	}
+
+	vector<Room***>::iterator it;
+	for (it = (*dungeon).begin(); it != (*dungeon).end(); ){
+		delete * it;
+		it = (*dungeon).erase(it);
 	}
 }
 
@@ -264,7 +269,7 @@ void Game::SetupCustomPlayer()
 	{
 		string input = ConsoleReader::getInstance().ReadLine();
 		int value = atoi(input.c_str());
-		if (value > 3 && value <= 100)
+		if (value > 3 && value <= 50)
 			floorDimensionX = value;
 	}
 
@@ -273,7 +278,7 @@ void Game::SetupCustomPlayer()
 	{
 		string input = ConsoleReader::getInstance().ReadLine();
 		int value = atoi(input.c_str());
-		if (value > 3 && value <= 100)
+		if (value > 3 && value <= 50)
 			floorDimensionY = value;
 	}
 
