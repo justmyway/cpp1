@@ -187,6 +187,8 @@ void FightGamePhase::FightBeasts()
 						ConsoleWriter::getInstance().WriteLine("Je hebt hem vermoord!");
 						delete player->GetLocation()->GetEnemies()->at(value);
 						player->GetLocation()->GetEnemies()->erase(player->GetLocation()->GetEnemies()->begin() + value);
+
+						ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "JE HEBT GEWONNE!!!!!!!", "Het monster is dood!!", "" });
 					}
 				}
 				else {

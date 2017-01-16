@@ -56,6 +56,7 @@ EnemyGenerator::EnemyGenerator()
 		delete monsterAttackCharacteristics;
 		delete monsterAttackPointsCharacteristics;
 	}
+	delete monsters;
 }
 
 EnemyGenerator::~EnemyGenerator()

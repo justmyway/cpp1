@@ -64,6 +64,9 @@ void InRoomGamePhase::Run()
 				case Str2Int("speler"):
 					ConsoleWriter::getInstance().WriteLine(player->ToString());
 					break;
+				case Str2Int("exit"):
+					game->FinishGame();
+					break;
 				default:
 					ConsoleWriter::getInstance().WriteLine("System error: on call " + action);
 					break;
@@ -135,6 +138,8 @@ vector<string> InRoomGamePhase::CreateActions()
 
 	// look at map
 	actions.push_back("speler");
+
+	actions.push_back("exit");
 
 	return actions;
 }
