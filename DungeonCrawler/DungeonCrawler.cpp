@@ -12,11 +12,9 @@ int main()
 
 	ConsoleWriter::getInstance().WriteLine("*---* DUNGEON GAME STARTED *---*");
 	
-	Game *game = new Game();
+	Game game = Game();
 
-	game->Play();
-
-	delete game;
+	game.Play();
 
 	ConsoleWriter::getInstance().WriteLine("*---* DUNGEON GAME ENDED *---*");
 	ConsoleWriter::getInstance().WriteLine("*---* Game will be stoped *---*");
