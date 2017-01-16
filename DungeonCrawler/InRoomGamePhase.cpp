@@ -212,6 +212,8 @@ void InRoomGamePhase::TakeItemsFromRoom()
 
 	items->clear();
 
+	delete items;
+
 	ConsoleWriter::getInstance().WriteLine(new vector<string>{ "", "Je hebt deze items opgepakt", "" });
 }
 
